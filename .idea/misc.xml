@@ -4,7 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/custom_preview.xml" value="0.2833333333333333" />
-        <entry key="app/src/main/res/layout/activity_game.xml" value="0.42916666666666664" />
+        <entry key="app/src/main/res/layout/activity_game.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.4432291666666667" />
         <entry key="app/src/main/res/layout/card.xml" value="0.375" />
         <entry key="app/src/main/res/layout/card_color_guess.xml" value="0.37037037037037035" />

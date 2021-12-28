@@ -16,7 +16,8 @@ import java.util.List;
 public class ColorGuessView extends View {
     /** A <code>List</code> mapping all the different colors (e.g. 1=red, 3=blue, ...)
      */
-    protected List<Paint> paintList;
+    private final Paint blankPositionPaint;
+    private final Paint colorPositionPaint;
     // TODO: these colors were just created for testing and should be replaced later
     private final int[][] colors = {
             {0,0,0},        //black for empty fields
@@ -31,26 +32,16 @@ public class ColorGuessView extends View {
 
     public ColorGuessView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initPaintList();
-        // colorGuess needs to be initialized, but with length 0 nothing will be drawn.
-        colorGuess = ColorGuess.emptyGuess(0);
-    }
 
-    private void initPaintList() {
-        paintList = new ArrayList<>();
-        for (int[] color : colors) {
-            Paint paint = new Paint();
-            paint.setColor(Color.rgb(color[0], color[1], color[2]));
-            if (Arrays.equals(color, new int[]{0, 0, 0})) {
-                // only draw the border if a position is empty (rgb = 0, 0, 0 = black)
-                //TODO: find better way of implementing "empty" colors
-                paint.setStyle(Paint.Style.STROKE);
-            } else {
-                // for all other positions: fill the circle with color
-                paint.setStyle(Paint.Style.FILL);
-            }
-            paintList.add(paint);
-        }
+        // colorGuess needs to be initialized, but with length 0 nothing will be drawn.
+        colorGuess = new ColorGuess(0);
+
+        // initialization of the Paint instances used for drawing in onDraw
+        blankPositionPaint = new Paint();
+        blankPositionPaint.setColor(Color.rgb(0,0,0));
+        blankPositionPaint.setStyle(Paint.Style.STROKE);
+        colorPositionPaint = new Paint();
+        colorPositionPaint.setStyle(Paint.Style.FILL);
     }
 
     public void draw(ColorGuess colorGuess) {
@@ -63,11 +54,18 @@ public class ColorGuessView extends View {
         // for all colors in colorGuess, draw circles (in a line) with some spacing in between
         //TODO: currently this gives very tiny circles due to getHeight (getWidth makes it bigger, but too big)
         // probably some settings in card_color_guess.xml or activity_game.xml cause this
-        float colorCircleRadius = (float) getHeight() / (colorGuess.getLength() * 2);
+        float colorCircleRadius = (float) (getHeight() / (colorGuess.getLength() * 2));
         float padding = colorCircleRadius / 2;
         for (int i = 0; i < colorGuess.getLength(); i++) {
             float posX = (i * 2) * (colorCircleRadius + padding) + colorCircleRadius;
-            canvas.drawCircle(posX, colorCircleRadius, colorCircleRadius, paintList.get(colorGuess.getColorAtIndex(i)));
+            Paint paint;
+            if (colorGuess.getColorAtIndex(i) == null) {
+                paint = blankPositionPaint;
+            } else {
+                paint = colorPositionPaint;
+                paint.setColor(colorGuess.getColorAtIndex(i));
+            }
+            canvas.drawCircle(posX, colorCircleRadius, colorCircleRadius, paint);
         }
         
     }

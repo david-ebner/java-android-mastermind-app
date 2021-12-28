@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ColorGuess {
-    //TODO: this Class has to contain a list (e.g. size 4) of Colors or empty fields
-    protected int[] colors;
+    protected Integer[] colors;
 
-    //TODO: the int[] list is just for testing purposes!
-    public ColorGuess(int[] colors) {
+    public ColorGuess(Integer[] colors) {
         this.colors = colors;
+    }
+    /** Constructor for a new <code>ColorGuess</code> containing all <code>null</code> values
+     * @param guessLength indicates the length of the <code>ColorGuess</code>
+     */
+    public ColorGuess(int guessLength) {
+        this.colors = new Integer[guessLength]; // the new array is filled with null by default
     }
 
     // toString is just for testing purposes!
@@ -25,7 +29,7 @@ public class ColorGuess {
         return sb.toString();
     }
 
-    public int getColorAtIndex(int index) {
+    public Integer getColorAtIndex(int index) {
         return colors[index];
     }
 
@@ -33,22 +37,14 @@ public class ColorGuess {
         return colors.length;
     }
 
-    /** Creates a new <code>ColorGuess</code> containing all zeroes
-     * @param guessLength indicates the length of the <code>ColorGuess</code> (= the number of zeroes)
-     */
-    public static ColorGuess emptyGuess(int guessLength) {
-        int[] zeroes = new int[guessLength]; // the new array is filled with zeroes by default
-        return new ColorGuess(zeroes);
-    }
-
-    /** Creates a <code>List</code> of <code>ColorGuess</code> objects containing only zeroes
+    /** Creates a <code>List</code> of <code>ColorGuess</code> objects containing only null values
      * @param guessLength indicates the length of each contained <code>ColorGuess</code>
      * @param listLength indicates the length of the returned <code>List</code>
      */
     public static List<ColorGuess> emptyGuessList(int guessLength, int listLength) {
         List<ColorGuess> list = new ArrayList<>();
         for (int i = 0; i < listLength; i++) {
-            list.add(emptyGuess(guessLength));
+            list.add(new ColorGuess(guessLength));
         }
         return list;
     }
