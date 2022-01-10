@@ -52,10 +52,9 @@ public class ColorGuessView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         // for all colors in colorGuess, draw circles (in a line) with some spacing in between
-        //TODO: currently this gives very tiny circles due to getHeight (getWidth makes it bigger, but too big)
-        // probably some settings in card_color_guess.xml or activity_game.xml cause this
-        float colorCircleRadius = (float) (getHeight() / (colorGuess.getLength() * 2));
-        float padding = colorCircleRadius / 2;
+        //TODO: calculation of circles and sizes not perfect yet
+        float colorCircleRadius = (float) (getHeight() / 2.5);
+        float padding = colorCircleRadius / 10;
         for (int i = 0; i < colorGuess.getLength(); i++) {
             float posX = (i * 2) * (colorCircleRadius + padding) + colorCircleRadius;
             Paint paint;
