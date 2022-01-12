@@ -2,12 +2,15 @@ package fhku.appprojektmastermind;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
 public class ColorGuessView extends ViewGroup {
+
+    //TODO: make ColorGuessView implement View.OnTouchListener for dragging already placed ColorBalls
 
     private ColorGuess colorGuess;
 
@@ -28,6 +31,8 @@ public class ColorGuessView extends ViewGroup {
             ColorBallView newColorBallView = new ColorBallView(getContext());
             newColorBallView.setColorBall(colorBall);
             this.addView(newColorBallView);
+
+            newColorBallView.setOnDragListener(new ColorGuessDragListener());
         }
 
     }
@@ -61,7 +66,6 @@ public class ColorGuessView extends ViewGroup {
 //        int diameterHeight = height - (padding_top * 2);
         diameter = Math.min(diameter, height - (padding_top * 2));
 
-
         for (int i = 0; i < CHILD_COUNT; i++) {
             View child = getChildAt(i);
             measureChild(child, widthMeasureSpec, heightMeasureSpec);
@@ -70,7 +74,6 @@ public class ColorGuessView extends ViewGroup {
             layoutParams.width = diameter;
             layoutParams.height = diameter;
         }
-
 
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
     }
@@ -86,6 +89,33 @@ public class ColorGuessView extends ViewGroup {
                     padding_top,
                     startPosition + diameter,
                     padding_top + diameter);
+        }
+    }
+
+    private static class ColorGuessDragListener implements OnDragListener {
+        @Override
+        public boolean onDrag(View dragReceiverView, DragEvent event) {
+            switch (event.getAction()) {
+                case DragEvent.ACTION_DRAG_STARTED:
+                case DragEvent.ACTION_DRAG_EXITED:
+                    // do nothing
+                    break;
+                case DragEvent.ACTION_DRAG_ENTERED:
+                    System.out.println("MMIND drag entered: " + dragReceiverView.toString());
+                    break;
+                case DragEvent.ACTION_DROP:
+                    ColorBallView draggedView = (ColorBallView) event.getLocalState();
+                    System.out.println("MMIND dragged view: " + draggedView.toString() +
+                            " dropped in " + dragReceiverView.toString());
+
+                    ColorRepertoireView owner = (ColorRepertoireView) draggedView.getParent();
+//                    owner.removeView(draggedView);
+
+                    ColorBallView receiver = (ColorBallView) dragReceiverView;
+                    receiver.setColorBall(draggedView.getColorBall());
+                    break;
+            }
+            return true;
         }
     }
 }
