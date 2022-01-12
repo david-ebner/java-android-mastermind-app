@@ -1,15 +1,18 @@
-package fhku.appprojektmastermind;
+package fhku.appprojektmastermind.container;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
-public class ColorRepertoireView extends ViewGroup {
+import fhku.appprojektmastermind.color.ColorBall;
+import fhku.appprojektmastermind.color.ColorBallView;
+
+public class ColorRepertoireView extends ViewGroup implements View.OnTouchListener {
 
     private ColorRepertoire colorRepertoire;
 
@@ -58,6 +61,7 @@ public class ColorRepertoireView extends ViewGroup {
             LayoutParams layoutParams = child.getLayoutParams();
             layoutParams.width = diameter;
             layoutParams.height = diameter;
+            child.setOnTouchListener(this);
         }
 
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
@@ -79,8 +83,15 @@ public class ColorRepertoireView extends ViewGroup {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Log.d("MMIND", "touching color repertoire");
-        return super.onTouchEvent(event);
+    public boolean onTouch(View v, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            ClipData data = ClipData.newPlainText("", "");
+            DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
+            v.startDrag(data, shadowBuilder, v, 0);
+//            v.setVisibility(View.INVISIBLE);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

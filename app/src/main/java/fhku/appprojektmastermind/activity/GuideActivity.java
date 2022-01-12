@@ -1,8 +1,10 @@
-package fhku.appprojektmastermind;
+package fhku.appprojektmastermind.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import fhku.appprojektmastermind.R;
 
 public class GuideActivity extends AppCompatActivity {
 

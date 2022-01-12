@@ -1,4 +1,4 @@
-package fhku.appprojektmastermind;
+package fhku.appprojektmastermind.container;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
+
+import fhku.appprojektmastermind.R;
 
 public class ColorGuessAdapter extends RecyclerView.Adapter<ColorGuessAdapter.ColorGuessViewHolder> {
 
