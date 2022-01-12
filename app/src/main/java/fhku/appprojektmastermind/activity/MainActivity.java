@@ -52,17 +52,26 @@ public class MainActivity extends AppCompatActivity {
 
         btn_kids.setOnClickListener(view -> {
             //  TODO: Intent Kids Mode
+            openGameTemporaryHackForTesting();
         });
         btn_easy.setOnClickListener(view -> {
             //  TODO: Intent Easy Mode
+            openGameTemporaryHackForTesting();
         });
         btn_hard.setOnClickListener(view -> {
             //  TODO: Intent Hard Mode
+            openGameTemporaryHackForTesting();
         });
         btn_master.setOnClickListener(view -> {
             //  TODO: Intent Master Mode
+            openGameTemporaryHackForTesting();
         });
 
         dialog.show();
+    }
+
+    private void openGameTemporaryHackForTesting() {
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
     }
 }
