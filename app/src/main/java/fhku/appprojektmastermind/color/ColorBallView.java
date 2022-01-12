@@ -1,9 +1,11 @@
-package fhku.appprojektmastermind;
+package fhku.appprojektmastermind.color;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+
+import fhku.appprojektmastermind.R;
 
 public class ColorBallView extends View {
     private ColorBall colorBall;

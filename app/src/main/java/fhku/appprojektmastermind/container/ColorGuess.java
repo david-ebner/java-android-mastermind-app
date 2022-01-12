@@ -1,7 +1,9 @@
-package fhku.appprojektmastermind;
+package fhku.appprojektmastermind.container;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fhku.appprojektmastermind.color.ColorBall;
 
 public class ColorGuess {
     private List<ColorBall> colorBalls;

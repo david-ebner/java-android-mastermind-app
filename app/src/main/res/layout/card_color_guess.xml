@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <fhku.appprojektmastermind.ColorGuessView
+        <fhku.appprojektmastermind.container.ColorGuessView
             android:id="@+id/colorGuessView"
             android:layout_width="0dp"
             android:layout_height="0dp"

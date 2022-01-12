@@ -1,4 +1,4 @@
-package fhku.appprojektmastermind;
+package fhku.appprojektmastermind.color;
 
 import android.graphics.Color;
 

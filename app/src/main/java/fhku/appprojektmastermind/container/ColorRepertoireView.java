@@ -1,4 +1,4 @@
-package fhku.appprojektmastermind;
+package fhku.appprojektmastermind.container;
 
 import android.content.ClipData;
 import android.content.Context;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+
+import fhku.appprojektmastermind.color.ColorBall;
+import fhku.appprojektmastermind.color.ColorBallView;
 
 public class ColorRepertoireView extends ViewGroup implements View.OnTouchListener {
 

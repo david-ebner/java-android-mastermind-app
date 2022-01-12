@@ -1,4 +1,4 @@
-package fhku.appprojektmastermind;
+package fhku.appprojektmastermind.container;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+
+import fhku.appprojektmastermind.color.ColorBall;
+import fhku.appprojektmastermind.color.ColorBallView;
 
 public class ColorGuessView extends ViewGroup {
 

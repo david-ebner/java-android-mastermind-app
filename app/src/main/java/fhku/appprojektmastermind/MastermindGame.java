@@ -2,6 +2,11 @@ package fhku.appprojektmastermind;
 
 import java.util.List;
 
+import fhku.appprojektmastermind.color.EmptyColorBall;
+import fhku.appprojektmastermind.color.PresetColorBall;
+import fhku.appprojektmastermind.container.ColorGuess;
+import fhku.appprojektmastermind.container.ColorRepertoire;
+
 public class MastermindGame {
     private final int COLOR_PATTERN_LENGTH;
     private final int ALLOWED_COLOR_GUESSES;

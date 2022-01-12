@@ -10,16 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.APPProjektMastermind">
         <activity
-            android:name=".GameActivity"
+            android:name=".activity.GameActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".activity.MainActivity"/>
         <!-- exported="true" is necessary for direct entry when testing-->
         <activity
-            android:name=".GuideActivity"
+            android:name=".activity.GuideActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".activity.MainActivity"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

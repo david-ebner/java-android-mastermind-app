@@ -1,4 +1,4 @@
-package fhku.appprojektmastermind;
+package fhku.appprojektmastermind.color;
 
 public class EmptyColorBall extends ColorBall {
 

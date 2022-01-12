@@ -1,10 +1,15 @@
-package fhku.appprojektmastermind;
+package fhku.appprojektmastermind.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import fhku.appprojektmastermind.container.ColorGuessAdapter;
+import fhku.appprojektmastermind.container.ColorRepertoireView;
+import fhku.appprojektmastermind.MastermindGame;
+import fhku.appprojektmastermind.R;
 
 public class GameActivity extends AppCompatActivity {
 

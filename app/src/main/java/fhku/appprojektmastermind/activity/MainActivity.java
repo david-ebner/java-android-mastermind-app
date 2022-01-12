@@ -1,4 +1,4 @@
-package fhku.appprojektmastermind;
+package fhku.appprojektmastermind.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import java.util.Objects;
+
+import fhku.appprojektmastermind.R;
 
 public class MainActivity extends AppCompatActivity {
     Button btn_resume, btn_start, btn_guide;
