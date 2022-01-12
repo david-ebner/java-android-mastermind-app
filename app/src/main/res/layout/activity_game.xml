@@ -8,9 +8,10 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test Game Activity"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/purple_200"
+        android:text="Placeholder for the hidden solution color pattern"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,12 +25,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <TextView
+    <fhku.appprojektmastermind.ColorRepertoireView
         android:id="@+id/colorRepertoire"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@color/purple_200"
-        android:text="this area will contain the available colors to drag and drop up into the list of guesses - heigt 100dp is hard coded at the moment, this will have to change"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

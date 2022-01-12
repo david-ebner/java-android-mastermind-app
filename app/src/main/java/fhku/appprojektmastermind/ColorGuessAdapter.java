@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,7 +48,8 @@ public class ColorGuessAdapter extends RecyclerView.Adapter<ColorGuessAdapter.Co
     @Override
     public void onBindViewHolder(@NonNull ColorGuessViewHolder holder, int position) {
         ColorGuess guess = guessList.get(position);
-        holder.colorGuessView.draw(guess);
+//        holder.colorGuessView.draw(guess);
+        holder.colorGuessView.setColorGuess(guess);
 
         //TODO: match-information for previous guesses should be filled
     }
