@@ -11,8 +11,13 @@
         android:theme="@style/Theme.APPProjektMastermind">
         <activity
             android:name=".GameActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
         <!-- exported="true" is necessary for direct entry when testing-->
+        <activity
+            android:name=".GuideActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
