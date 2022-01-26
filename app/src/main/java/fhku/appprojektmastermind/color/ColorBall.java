@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ColorBall {
     private Integer color = Color.BLACK;
+    private boolean empty = true;
 
     public ColorBall() {
     }
@@ -14,6 +15,7 @@ public class ColorBall {
     public ColorBall(Integer color) {
         if (color != null) {
             this.color = color;
+            this.empty = false;
         }
     }
 
@@ -22,14 +24,19 @@ public class ColorBall {
     }
 
     public boolean isEmpty() {
-        return false;
+        return empty;
     }
 
     public static List<ColorBall> createEmptyColorBalls(int listLength) {
         List<ColorBall> list = new ArrayList<>();
         for (int i = 0; i < listLength; i++) {
-            list.add(new EmptyColorBall());
+            list.add(new ColorBall());
         }
         return list;
+    }
+
+    public void setColor(Integer color) {
+        this.color = color;
+        this.empty = false;
     }
 }

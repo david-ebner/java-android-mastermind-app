@@ -28,12 +28,16 @@ public class GameActivity extends AppCompatActivity {
         game = new MastermindGame(colorPatternSize, allowedColorGuesses);
 
         // set up a ColorGuessAdapter for the RecyclerView
-        ColorGuessAdapter adapter = new ColorGuessAdapter(game.getColorGuesses());
+        ColorGuessAdapter adapter = new ColorGuessAdapter(game.getColorGuesses(), game);
 
-        // assign the game's ColorGuessAdapter (and a LayoutManager) to the RecyclerView
+        // set up a LinearLayoutManager with reverse order
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+
+        // assign the game's ColorGuessAdapter and LayoutManager to the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.guessList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
         // assign the game's ColorRepertoire
         ColorRepertoireView colorRepertoireView = findViewById(R.id.colorRepertoire);
