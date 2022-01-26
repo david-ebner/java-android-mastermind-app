@@ -35,20 +35,23 @@ public class GameActivity extends AppCompatActivity {
         game = new MastermindGame(colorPatternLength, allowedGuessRounds, allowDuplicates);
 
         // set up a ColorGuessAdapter for the RecyclerView
-        ColorGuessAdapter adapter = new ColorGuessAdapter(game.getColorGuesses(), game);
+        ColorGuessAdapter adapter = new ColorGuessAdapter(game.getGuessRounds(), game);
 
         // set up a LinearLayoutManager with reverse order
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
 
         // assign the game's ColorGuessAdapter and LayoutManager to the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.guessList);
+        RecyclerView recyclerView = findViewById(R.id.guessRoundsView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         // assign the game's ColorRepertoire
         ColorRepertoireView colorRepertoireView = findViewById(R.id.colorRepertoire);
         colorRepertoireView.setColorRepertoire(game.getColorRepertoire());
+
+        // assign the game's TargetList
+
     }
 
     private void openLoseDialog() {

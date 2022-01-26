@@ -33,12 +33,16 @@ public class MastermindGame {
         TARGET_LIST = ColorGuess.createTargetList(COLOR_PATTERN_LENGTH, ALLOW_DUPLICATES);
     }
 
-    public List<ColorGuess> getColorGuesses() {
+    public List<ColorGuess> getGuessRounds() {
         return COLOR_GUESS_ROUNDS;
     }
 
     public ColorRepertoire getColorRepertoire() {
         return COLOR_REPERTOIRE;
+    }
+
+    public ColorGuess getTargetList() {
+        return TARGET_LIST;
     }
 
     private void playNextGuess() {

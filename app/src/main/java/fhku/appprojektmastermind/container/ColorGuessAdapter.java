@@ -18,10 +18,10 @@ import fhku.appprojektmastermind.R;
 public class ColorGuessAdapter extends RecyclerView.Adapter<ColorGuessAdapter.ColorGuessViewHolder> {
 
     protected MastermindGame game;
+    protected List<ColorGuess> guessRounds;
 
-    protected List<ColorGuess> guessList;
-    public ColorGuessAdapter(List<ColorGuess> guessList, MastermindGame game) {
-        this.guessList = guessList;
+    public ColorGuessAdapter(List<ColorGuess> guessRounds, MastermindGame game) {
+        this.guessRounds = guessRounds;
         this.game = game; //TODO: really hand over 'game' ??
     }
 
@@ -40,7 +40,7 @@ public class ColorGuessAdapter extends RecyclerView.Adapter<ColorGuessAdapter.Co
 
     @Override
     public int getItemCount() {
-        return guessList.size();
+        return guessRounds.size();
     }
 
     @NonNull
@@ -53,7 +53,7 @@ public class ColorGuessAdapter extends RecyclerView.Adapter<ColorGuessAdapter.Co
 
     @Override
     public void onBindViewHolder(@NonNull ColorGuessViewHolder holder, int position) {
-        ColorGuess guess = guessList.get(position);
+        ColorGuess guess = guessRounds.get(position);
         holder.colorGuessView.setColorGuess(guess);
 
         holder.buttonSubmit.setEnabled(guess.isActive());
