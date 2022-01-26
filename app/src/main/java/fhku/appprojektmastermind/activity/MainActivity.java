@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     // displaying the difficulty Dialog
     private void showCustomDialog() {
         Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.difficulty_dialog);
+        dialog.setContentView(R.layout.dialog_difficulty);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         Button btn_kids = dialog.findViewById(R.id.btn_difficulty_kids);

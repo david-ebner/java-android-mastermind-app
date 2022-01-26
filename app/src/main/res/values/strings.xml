@@ -18,4 +18,12 @@
     <string name="kids">Kids</string>
     <string name="difficulty_modes">Choose Difficulty</string>
     <string name="logomastermind">LogoMasterMind</string>
+    <string name="congrats">Congrats!</string>
+    <string name="you_are_a_true_mastermind">You are a true Mastermind!</string>
+    <string name="back_to_menu">Back to Menu</string>
+    <string name="icon_close">Icon Close</string>
+    <string name="win_trophy">Win Trophy</string>
+    <string name="sorry">Sorry!</string>
+    <string name="you_have_no_attempts_left">You have no attempts left.</string>
+    <string name="lose_picture">Lose Picture</string>
 </resources>

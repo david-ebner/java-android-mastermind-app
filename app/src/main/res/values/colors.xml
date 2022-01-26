@@ -7,4 +7,8 @@
     <color name="cream_secondary">#E29578</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="yellow_win">#FFC107</color>
+    <color name="red_lose">#FF5C5F</color>
+
 </resources>
