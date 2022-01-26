@@ -39,11 +39,19 @@ public class ColorGuess {
         return done;
     }
 
-    public static List<ColorGuess> emptyGuessList(int listLength, int guessLength) {
+    public static List<ColorGuess> emptyGuessList(int patternLength, int guessRounds) {
         List<ColorGuess> list = new ArrayList<>();
-        for (int i = 0; i < listLength; i++) {
-            list.add(new ColorGuess(ColorBall.createEmptyColorBalls(guessLength)));
+        for (int i = 0; i < guessRounds; i++) {
+            list.add(new ColorGuess(ColorBall.createEmptyColorBalls(patternLength)));
         }
+        return list;
+    }
+
+
+    public static List<ColorGuess> createTargetList(){
+        List<ColorGuess> list = new ArrayList<>();
+
+
         return list;
     }
 }

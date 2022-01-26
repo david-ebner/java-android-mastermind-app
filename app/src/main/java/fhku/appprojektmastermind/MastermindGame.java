@@ -8,24 +8,27 @@ import fhku.appprojektmastermind.container.ColorRepertoire;
 
 public class MastermindGame {
     private final int COLOR_PATTERN_LENGTH;
-    private final int ALLOWED_COLOR_GUESSES;
+    private final int ALLOWED_GUESS_ROUNDS;
 
     private final List<ColorGuess> COLOR_GUESS_LIST;
     private final ColorRepertoire COLOR_REPERTOIRE;
+    private final List<ColorGuess> TARGET_LIST;
 
     private int activeColorGuessIndex = 0;
 
-    public MastermindGame(int color_pattern_length, int allowed_color_guesses) {
-        COLOR_PATTERN_LENGTH = color_pattern_length;
-        ALLOWED_COLOR_GUESSES = allowed_color_guesses;
+    public MastermindGame(int colorPatternLength, int allowedGuessRounds) {
+        COLOR_PATTERN_LENGTH = colorPatternLength;
+        ALLOWED_GUESS_ROUNDS = allowedGuessRounds;
 
-        COLOR_GUESS_LIST = ColorGuess.emptyGuessList(ALLOWED_COLOR_GUESSES, COLOR_PATTERN_LENGTH);
+        COLOR_GUESS_LIST = ColorGuess.emptyGuessList(COLOR_PATTERN_LENGTH, ALLOWED_GUESS_ROUNDS);
         setupColorGuessListForTesting();
 
         // set up a ColorRepertoire containing all available PresetColorBalls
         COLOR_REPERTOIRE = new ColorRepertoire(PresetColorBall.values());
 
         COLOR_GUESS_LIST.get(0).setActive();
+
+        TARGET_LIST = ColorGuess.createTargetList();
     }
 
     public List<ColorGuess> getColorGuesses() {
@@ -58,7 +61,7 @@ public class MastermindGame {
     }
 
     private boolean allGuessesUsed() {
-        return activeColorGuessIndex + 1 == ALLOWED_COLOR_GUESSES;
+        return activeColorGuessIndex + 1 == ALLOWED_GUESS_ROUNDS;
     }
 
 
