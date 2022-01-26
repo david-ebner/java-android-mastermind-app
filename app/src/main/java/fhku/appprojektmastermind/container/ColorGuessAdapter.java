@@ -56,8 +56,11 @@ public class ColorGuessAdapter extends RecyclerView.Adapter<ColorGuessAdapter.Co
         ColorGuess guess = guessList.get(position);
         holder.colorGuessView.setColorGuess(guess);
 
+        holder.buttonSubmit.setEnabled(guess.isActive());
+        holder.buttonSubmit.setVisibility(guess.isDone() ? View.INVISIBLE : View.VISIBLE);
+
         holder.buttonSubmit.setOnClickListener(view -> {
-            game.validate(holder.colorGuessView.getColorGuess());
+            game.validateLatestColorGuess();
             notifyDataSetChanged();
         });
 

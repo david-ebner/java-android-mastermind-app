@@ -25,7 +25,7 @@ public class MastermindGame {
         // set up a ColorRepertoire containing all available PresetColorBalls
         COLOR_REPERTOIRE = new ColorRepertoire(PresetColorBall.values());
 
-        COLOR_GUESS_LIST.get(0).setActive(true);
+        COLOR_GUESS_LIST.get(0).setActive();
     }
 
     public List<ColorGuess> getColorGuesses() {
@@ -37,17 +37,28 @@ public class MastermindGame {
     }
 
     private void playNextGuess() {
-        COLOR_GUESS_LIST.get(activeColorGuessIndex).setActive(false);
-        COLOR_GUESS_LIST.get(++activeColorGuessIndex).setActive(true);
-
-        //TODO: default ColorGuess = inactive and grayed out
-        //TODO: activate next ColorGuess
-        //TODO: deactivate previous ColorGuess (no more interaction, but not grayed out)
+        COLOR_GUESS_LIST.get(activeColorGuessIndex).setDone();
+        COLOR_GUESS_LIST.get(++activeColorGuessIndex).setActive();
     }
 
-    public void validate(ColorGuess colorGuess) {
-        COLOR_GUESS_LIST.get(activeColorGuessIndex).setColorBalls(colorGuess.getColorBalls());
-        playNextGuess();
+    public void validateLatestColorGuess() {
+        if (hasWon()) {
+            //TODO: show "success"
+        } else if (allGuessesUsed()) {
+            COLOR_GUESS_LIST.get(activeColorGuessIndex).setDone();
+            //TODO: show "game over" and the actual winning colors
+        } else {
+            playNextGuess();
+        }
+    }
+
+    private boolean hasWon() {
+        //TODO: validate latest ColorGuess
+        return false;
+    }
+
+    private boolean allGuessesUsed() {
+        return activeColorGuessIndex + 1 == ALLOWED_COLOR_GUESSES;
     }
 
 

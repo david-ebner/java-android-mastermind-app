@@ -56,7 +56,10 @@ public class ColorGuessView extends ViewGroup {
     public void setColorGuess(ColorGuess colorGuess) {
         this.colorGuess = colorGuess;
         initColorBallViews();
-        if (this.colorGuess.isActive()) {
+
+        if (this.colorGuess.isDone()) {
+            setGrayedOut(false);
+        } else if (this.colorGuess.isActive()) {
             makeColorBallViewsDragTargets();
             setGrayedOut(false);
         } else {
