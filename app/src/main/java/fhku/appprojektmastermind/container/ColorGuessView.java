@@ -26,7 +26,9 @@ public class ColorGuessView extends ViewGroup {
         super(context, attrs);
     }
 
-    private void initColorGuess() {
+    private void initColorBallViews() {
+        this.removeAllViews();
+
         if (colorGuess.getColorBalls().isEmpty()) {
             return;
         }
@@ -34,20 +36,36 @@ public class ColorGuessView extends ViewGroup {
             ColorBallView newColorBallView = new ColorBallView(getContext());
             newColorBallView.setColorBall(colorBall);
             this.addView(newColorBallView);
-
-            newColorBallView.setOnDragListener(new ColorGuessDragListener());
         }
-
     }
 
-    public void draw(ColorGuess colorGuess) {
-        this.colorGuess = colorGuess;
-        invalidate();
+    private void makeColorBallViewsDragTargets() {
+        for (int index = 0; index < this.getChildCount(); index++) {
+            this.getChildAt(index).setOnDragListener(new ColorGuessDragListener());
+        }
+    }
+
+    public void setGrayedOut(boolean grayedOut) {
+        if (grayedOut) {
+            this.setAlpha(.5f);
+        } else {
+            this.setAlpha(1f);
+        }
     }
 
     public void setColorGuess(ColorGuess colorGuess) {
         this.colorGuess = colorGuess;
-        initColorGuess();
+        initColorBallViews();
+        if (this.colorGuess.isActive()) {
+            makeColorBallViewsDragTargets();
+            setGrayedOut(false);
+        } else {
+            setGrayedOut(true);
+        }
+    }
+
+    public ColorGuess getColorGuess() {
+        return colorGuess;
     }
 
     @Override
@@ -115,6 +133,7 @@ public class ColorGuessView extends ViewGroup {
 //                    owner.removeView(draggedView);
 
                     ColorBallView receiver = (ColorBallView) dragReceiverView;
+                    receiver.getColorBall().setColor(draggedView.getColorBall().getColorInt());
                     receiver.setColorBall(draggedView.getColorBall());
                     break;
             }

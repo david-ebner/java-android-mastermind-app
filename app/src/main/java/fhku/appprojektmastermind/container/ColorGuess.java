@@ -7,6 +7,7 @@ import fhku.appprojektmastermind.color.ColorBall;
 
 public class ColorGuess {
     private List<ColorBall> colorBalls;
+    private boolean active = false;
 
     public ColorGuess(List<ColorBall> colorBalls) {
         this.colorBalls = colorBalls;
@@ -14,6 +15,18 @@ public class ColorGuess {
 
     public List<ColorBall> getColorBalls() {
         return new ArrayList<>(colorBalls);
+    }
+
+    public void setColorBalls(List<ColorBall> colorBalls) {
+        this.colorBalls = colorBalls;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 
     public static List<ColorGuess> emptyGuessList(int listLength, int guessLength) {

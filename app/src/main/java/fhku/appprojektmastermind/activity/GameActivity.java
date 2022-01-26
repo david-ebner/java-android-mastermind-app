@@ -28,7 +28,7 @@ public class GameActivity extends AppCompatActivity {
         game = new MastermindGame(colorPatternSize, allowedColorGuesses);
 
         // set up a ColorGuessAdapter for the RecyclerView
-        ColorGuessAdapter adapter = new ColorGuessAdapter(game.getColorGuesses());
+        ColorGuessAdapter adapter = new ColorGuessAdapter(game.getColorGuesses(), game);
 
         // assign the game's ColorGuessAdapter (and a LayoutManager) to the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.guessList);

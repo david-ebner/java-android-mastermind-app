@@ -12,13 +12,17 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
+import fhku.appprojektmastermind.MastermindGame;
 import fhku.appprojektmastermind.R;
 
 public class ColorGuessAdapter extends RecyclerView.Adapter<ColorGuessAdapter.ColorGuessViewHolder> {
 
+    protected MastermindGame game;
+
     protected List<ColorGuess> guessList;
-    public ColorGuessAdapter(List<ColorGuess> guessList) {
+    public ColorGuessAdapter(List<ColorGuess> guessList, MastermindGame game) {
         this.guessList = guessList;
+        this.game = game; //TODO: really hand over 'game' ??
     }
 
     public static class ColorGuessViewHolder extends RecyclerView.ViewHolder {
@@ -50,8 +54,12 @@ public class ColorGuessAdapter extends RecyclerView.Adapter<ColorGuessAdapter.Co
     @Override
     public void onBindViewHolder(@NonNull ColorGuessViewHolder holder, int position) {
         ColorGuess guess = guessList.get(position);
-//        holder.colorGuessView.draw(guess);
         holder.colorGuessView.setColorGuess(guess);
+
+        holder.buttonSubmit.setOnClickListener(view -> {
+            game.validate(holder.colorGuessView.getColorGuess());
+            notifyDataSetChanged();
+        });
 
         //TODO: match-information for previous guesses should be filled
     }
