@@ -2,8 +2,10 @@ package fhku.appprojektmastermind.container;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import fhku.appprojektmastermind.color.ColorBall;
+import fhku.appprojektmastermind.color.PresetColorBall;
 
 public class ColorGuess {
     private List<ColorBall> colorBalls;
@@ -48,10 +50,31 @@ public class ColorGuess {
     }
 
 
-    public static List<ColorGuess> createTargetList(){
-        List<ColorGuess> list = new ArrayList<>();
+    public static ColorGuess createTargetList(int patternLength, boolean allowDuplicates){
+        //  TODO: only allow Colors which are also in ColorRepertoire
+        List<ColorBall> allPossibleColors = new ArrayList<>();
+        for (PresetColorBall color: PresetColorBall.values()) {
+            allPossibleColors.add(color.getBall());
+        }
 
+        List<ColorBall> targetList = new ArrayList<>();
+        Random rand = new Random();
 
-        return list;
+        if (allowDuplicates) {  // Duplicates allowed
+            for (int i = 0; i <= patternLength; i++) {
+                int randIndex = rand.nextInt(allPossibleColors.size());
+
+                targetList.add(allPossibleColors.get(randIndex));
+            }
+        } else {  // Duplicates not allowed
+            for (int i = 0; i <= patternLength; i++) {
+                int randIndex = rand.nextInt(allPossibleColors.size());
+
+                targetList.add(allPossibleColors.get(randIndex));
+                allPossibleColors.remove(randIndex);
+            }
+        }
+
+        return new ColorGuess(targetList);
     }
 }

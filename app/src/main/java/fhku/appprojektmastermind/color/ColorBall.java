@@ -27,9 +27,9 @@ public class ColorBall {
         return empty;
     }
 
-    public static List<ColorBall> createEmptyColorBalls(int listLength) {
+    public static List<ColorBall> createEmptyColorBalls(int patternLength) {
         List<ColorBall> list = new ArrayList<>();
-        for (int i = 0; i < listLength; i++) {
+        for (int i = 0; i < patternLength; i++) {
             list.add(new ColorBall());
         }
         return list;

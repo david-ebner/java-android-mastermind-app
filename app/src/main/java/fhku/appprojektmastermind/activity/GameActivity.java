@@ -30,8 +30,9 @@ public class GameActivity extends AppCompatActivity {
         //TODO: number of available colors will be a difficulty setting, too
         int colorPatternLength = getIntent().getIntExtra("colorPatternLength", 4);
         int allowedGuessRounds = getIntent().getIntExtra("allowedGuessRounds", 10);
+        boolean allowDuplicates = getIntent().getBooleanExtra("allowDuplicates",true);
 
-        game = new MastermindGame(colorPatternLength, allowedGuessRounds);
+        game = new MastermindGame(colorPatternLength, allowedGuessRounds, allowDuplicates);
 
         // set up a ColorGuessAdapter for the RecyclerView
         ColorGuessAdapter adapter = new ColorGuessAdapter(game.getColorGuesses(), game);
