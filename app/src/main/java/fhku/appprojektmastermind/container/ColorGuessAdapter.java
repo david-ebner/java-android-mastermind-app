@@ -25,6 +25,7 @@ public class ColorGuessAdapter extends RecyclerView.Adapter<ColorGuessAdapter.Co
         this.game = game; //TODO: really hand over 'game' ??
     }
 
+    // implements one guess-round
     public static class ColorGuessViewHolder extends RecyclerView.ViewHolder {
         public ColorGuessView colorGuessView;
         public Button buttonSubmit;

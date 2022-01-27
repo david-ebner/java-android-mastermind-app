@@ -51,7 +51,7 @@ public class GameActivity extends AppCompatActivity {
         colorRepertoireView.setColorRepertoire(game.getColorRepertoire());
 
         // assign the game's TargetList
-
+        //  TODO: make a TargetList View and implement it here
     }
 
     private void openLoseDialog() {

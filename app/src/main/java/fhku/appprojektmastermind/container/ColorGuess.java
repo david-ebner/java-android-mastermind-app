@@ -61,13 +61,13 @@ public class ColorGuess {
         Random rand = new Random();
 
         if (allowDuplicates) {  // Duplicates allowed
-            for (int i = 0; i <= patternLength; i++) {
+            for (int i = 0; i < patternLength; i++) {
                 int randIndex = rand.nextInt(allPossibleColors.size());
 
                 targetList.add(allPossibleColors.get(randIndex));
             }
         } else {  // Duplicates not allowed
-            for (int i = 0; i <= patternLength; i++) {
+            for (int i = 0; i < patternLength; i++) {
                 int randIndex = rand.nextInt(allPossibleColors.size());
 
                 targetList.add(allPossibleColors.get(randIndex));
