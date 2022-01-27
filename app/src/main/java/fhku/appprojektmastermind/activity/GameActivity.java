@@ -28,26 +28,30 @@ public class GameActivity extends AppCompatActivity {
 
         // set the difficulty according to an Intent from the MainActivity
         //TODO: number of available colors will be a difficulty setting, too
-        int colorPatternSize = getIntent().getIntExtra("colorPatternSize", 4);
-        int allowedColorGuesses = getIntent().getIntExtra("allowedColorGuesses", 10);
+        int colorPatternLength = getIntent().getIntExtra("colorPatternLength", 4);
+        int allowedGuessRounds = getIntent().getIntExtra("allowedGuessRounds", 10);
+        boolean allowDuplicates = getIntent().getBooleanExtra("allowDuplicates",true);
 
-        game = new MastermindGame(colorPatternSize, allowedColorGuesses);
+        game = new MastermindGame(colorPatternLength, allowedGuessRounds, allowDuplicates);
 
         // set up a ColorGuessAdapter for the RecyclerView
-        ColorGuessAdapter adapter = new ColorGuessAdapter(game.getColorGuesses(), game);
+        ColorGuessAdapter adapter = new ColorGuessAdapter(game.getGuessRounds(), game);
 
         // set up a LinearLayoutManager with reverse order
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
 
         // assign the game's ColorGuessAdapter and LayoutManager to the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.guessList);
+        RecyclerView recyclerView = findViewById(R.id.guessRoundsView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         // assign the game's ColorRepertoire
         ColorRepertoireView colorRepertoireView = findViewById(R.id.colorRepertoire);
         colorRepertoireView.setColorRepertoire(game.getColorRepertoire());
+
+        // assign the game's TargetList
+        //  TODO: make a TargetList View and implement it here
     }
 
     private void openLoseDialog() {

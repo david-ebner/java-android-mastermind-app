@@ -86,7 +86,7 @@ public class ColorGuessView extends ViewGroup {
 
         int availableWidth = width - spacing;
         diameter = (CHILD_COUNT == 0 ?
-                DEFAULT_DIAMETER : availableWidth / CHILD_COUNT); //TODO avoid divide by zero
+                DEFAULT_DIAMETER : availableWidth / CHILD_COUNT); //  TODO: avoid divide by zero
 //        int diameterHeight = height - (padding_top * 2);
         diameter = Math.min(diameter, height - (padding_top * 2));
 
