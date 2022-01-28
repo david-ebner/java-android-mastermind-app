@@ -7,12 +7,10 @@ import fhku.appprojektmastermind.color.ColorBall;
 import fhku.appprojektmastermind.color.PresetColorBall;
 
 public class ColorRepertoire {
-    private final List<ColorBall> COLOR_BALLS = new ArrayList<>();
+    private final List<ColorBall> COLOR_BALLS;
 
-    public ColorRepertoire(PresetColorBall... presetColorBalls) {
-        for (PresetColorBall color : presetColorBalls) {
-            this.COLOR_BALLS.add(color.getBall());
-        }
+    public ColorRepertoire(List<ColorBall> playColors) {
+        COLOR_BALLS = playColors;
     }
 
     public List<ColorBall> getColorBalls() {

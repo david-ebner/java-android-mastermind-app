@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 import fhku.appprojektmastermind.color.ColorBall;
-import fhku.appprojektmastermind.color.PresetColorBall;
 
 public class ColorGuess {
     private List<ColorBall> colorBalls;
@@ -50,31 +49,24 @@ public class ColorGuess {
     }
 
 
-    public static ColorGuess createTargetList(int patternLength, boolean allowDuplicates){
-        //  TODO: only allow Colors which are also in ColorRepertoire
-        List<ColorBall> allPossibleColors = new ArrayList<>();
-        for (PresetColorBall color: PresetColorBall.values()) {
-            allPossibleColors.add(color.getBall());
-        }
-
+    public static ColorGuess createTargetList(int patternLength, boolean allowDuplicates, List<ColorBall> playColors){
         List<ColorBall> targetList = new ArrayList<>();
         Random rand = new Random();
 
         if (allowDuplicates) {  // Duplicates allowed
             for (int i = 0; i < patternLength; i++) {
-                int randIndex = rand.nextInt(allPossibleColors.size());
+                int randIndex = rand.nextInt(playColors.size());
 
-                targetList.add(allPossibleColors.get(randIndex));
+                targetList.add(playColors.get(randIndex));
             }
         } else {  // Duplicates not allowed
             for (int i = 0; i < patternLength; i++) {
-                int randIndex = rand.nextInt(allPossibleColors.size());
+                int randIndex = rand.nextInt(playColors.size());
 
-                targetList.add(allPossibleColors.get(randIndex));
-                allPossibleColors.remove(randIndex);
+                targetList.add(playColors.get(randIndex));
+                playColors.remove(randIndex);
             }
         }
-
         return new ColorGuess(targetList);
     }
 }
