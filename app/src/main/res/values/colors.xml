@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
     <color name="blue_main">#0099A6</color>
     <color name="blue_secondary">#006D77</color>
     <color name="cream_main">#FFDDD2</color>
     <color name="cream_secondary">#E29578</color>
+    <color name="blue_background">#EDF6F9</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 

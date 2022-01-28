@@ -10,7 +10,7 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:background="@color/purple_200"
+        android:background="@color/blue_background"
         android:text="Placeholder for the hidden solution color pattern"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +29,7 @@
         android:id="@+id/colorRepertoire"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/purple_200"
+        android:background="@color/blue_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
