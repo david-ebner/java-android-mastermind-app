@@ -14,7 +14,7 @@ import java.util.Objects;
 import fhku.appprojektmastermind.R;
 
 public class MainActivity extends AppCompatActivity {
-    Button btn_resume, btn_start, btn_guide;
+    Button btn_start, btn_guide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        btn_resume = findViewById(R.id.btn_resume);
         btn_start = findViewById(R.id.btn_start);
         btn_guide = findViewById(R.id.btn_guide);
 
-        btn_resume.setOnClickListener(view -> {
-            //  TODO: Intent resume Game
-        });
 
         btn_start.setOnClickListener(view -> showCustomDialog());
 
@@ -49,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
         Button btn_easy = dialog.findViewById(R.id.btn_difficulty_easy);
         Button btn_hard = dialog.findViewById(R.id.btn_difficulty_hard);
         Button btn_master = dialog.findViewById(R.id.btn_difficulty_master);
+
+        btn_kids.setEnabled(false);
+        btn_easy.setEnabled(true);
+        btn_hard.setEnabled(false);
+        btn_master.setEnabled(false);
 
         btn_kids.setOnClickListener(view -> {
             //  TODO: Intent Kids Mode

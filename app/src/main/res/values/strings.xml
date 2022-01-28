@@ -2,7 +2,6 @@
     <string name="app_name">Mastermind</string>
     <string name="how_to_play">How To Play</string>
     <string name="start_game">New Game</string>
-    <string name="resume_game">Resume Game</string>
     <string name="title_activity_guide">GuideActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
