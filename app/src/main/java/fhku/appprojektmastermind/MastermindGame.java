@@ -1,5 +1,6 @@
 package fhku.appprojektmastermind;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fhku.appprojektmastermind.color.ColorBall;
@@ -34,8 +35,10 @@ public class MastermindGame {
         COLOR_REPERTOIRE = new ColorRepertoire(PLAY_COLORS);
 
         COLOR_GUESS_ROUNDS.get(0).setActive();
-
         TARGET_LIST = ColorGuess.createTargetList(COLOR_PATTERN_LENGTH, ALLOW_DUPLICATES, PLAY_COLORS);
+
+        System.out.println("TargetList: " + TARGET_LIST.getColorBalls());
+        System.out.println("ColorRepertoire: " + COLOR_REPERTOIRE.getColorBalls());
     }
 
     public List<ColorGuess> getGuessRounds() {
@@ -57,18 +60,18 @@ public class MastermindGame {
 
     public void validateLatestColorGuess() {
         if (hasWon()) {
-            //TODO: show "success"
+            //TODO: show "dialog_win"
         } else if (allGuessesUsed()) {
             COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).setDone();
-            //TODO: show "game over" and the actual winning colors
+            //  TODO: show "dialog_lose"
+            //  TODO: show actual winning colors
         } else {
             playNextGuess();
         }
     }
 
     private boolean hasWon() {
-        //TODO: validate latest ColorGuess
-        return false;
+        return TARGET_LIST.equals(COLOR_GUESS_ROUNDS.get(activeColorGuessIndex));
     }
 
     private boolean allGuessesUsed() {

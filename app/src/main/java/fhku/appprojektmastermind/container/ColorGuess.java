@@ -60,11 +60,12 @@ public class ColorGuess {
                 targetList.add(playColors.get(randIndex));
             }
         } else {  // Duplicates not allowed
+            List<ColorBall> colorsAllowed = new ArrayList<>(playColors); // since when is Java pass-by-reference and not pass-by-value??
             for (int i = 0; i < patternLength; i++) {
-                int randIndex = rand.nextInt(playColors.size());
+                int randIndex = rand.nextInt(colorsAllowed.size());
 
-                targetList.add(playColors.get(randIndex));
-                playColors.remove(randIndex);
+                targetList.add(colorsAllowed.get(randIndex));
+                colorsAllowed.remove(randIndex);
             }
         }
         return new ColorGuess(targetList);
