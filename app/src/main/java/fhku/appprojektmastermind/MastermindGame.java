@@ -37,10 +37,6 @@ public class MastermindGame {
 
         COLOR_GUESS_ROUNDS.get(0).setActive();
         TARGET_LIST = ColorGuess.createTargetList(COLOR_PATTERN_LENGTH, ALLOW_DUPLICATES, PLAY_COLORS);
-
-        //  TODO: delete those Sout's
-        System.out.println("TargetList: " + TARGET_LIST.getColorBalls());
-        System.out.println("ColorRepertoire: " + COLOR_REPERTOIRE.getColorBalls());
     }
 
     public List<ColorGuess> getGuessRounds() {
