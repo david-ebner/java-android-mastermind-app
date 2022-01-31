@@ -29,7 +29,7 @@ public class GameActivity extends AppCompatActivity {
         // set the difficulty according to an Intent from the MainActivity
         int colorPatternLength = getIntent().getIntExtra("colorPatternLength", 4);
         int allowedGuessRounds = getIntent().getIntExtra("allowedGuessRounds", 10);
-        boolean allowDuplicates = getIntent().getBooleanExtra("allowDuplicates",false);
+        boolean allowDuplicates = getIntent().getBooleanExtra("allowDuplicates",true);
 
         game = new MastermindGame(colorPatternLength, allowedGuessRounds, allowDuplicates);
 

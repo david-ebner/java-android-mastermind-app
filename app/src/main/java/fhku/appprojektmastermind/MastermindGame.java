@@ -71,11 +71,12 @@ public class MastermindGame {
         }
     }
 
+    // gives back number of correct colors on right position and number of correct colors on wrong position
     public List<Integer> getNumOfValidatedColors(List<ColorBall> currRound) {
         int rightPos = 0;
-        int wrongPos;
+        int wrongPos = 0;
 
-        // get all ColorValues as int
+        // get all ColorValues as Integer
         List<Integer> target = new ArrayList<>();
         List<Integer> curr = new ArrayList<>();
         for (int i = 0; i < currRound.size(); i++) {
@@ -83,26 +84,34 @@ public class MastermindGame {
             curr.add(currRound.get(i).getColorInt());
         }
 
+        // count correct colors on correct position
         for (int i = 0; i < target.size(); i++) {
                if (target.get(i).equals(curr.get(i))) {
                    rightPos++;
+                   target.set(i, null);
+                   curr.set(i, null);
                }
         }
 
-        // TODO: retainAll has to be fixed;
-        //  what happens if duplicates are allowed?
-        target.retainAll(currRound);
-        wrongPos = target.size() - rightPos;
-
+        // count colors on wrong position
+        for (int i = 0; i < target.size(); i++) {
+            if (target.get(i) != null || curr.get(i) != null) {
+                for (int j = 0; j < target.size(); j++) {
+                    if (target.get(j) != null && curr.get(i).equals(target.get(j))) {
+                        wrongPos++;
+                        target.set(j, null);
+                        break;
+                    }
+                }
+            }
+        }
         return new ArrayList<>(Arrays.asList(rightPos, wrongPos));
     }
 
 
     private boolean hasWon() {
         List<Integer> rightWrongColors = getNumOfValidatedColors(COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).getColorBalls());
-        if (rightWrongColors.get(0) == 4) return true;
-
-        return false;
+        return rightWrongColors.get(0) == 4;
     }
 
     private boolean allGuessesUsed() {
