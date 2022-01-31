@@ -27,7 +27,6 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         // set the difficulty according to an Intent from the MainActivity
-        //TODO: number of available colors will be a difficulty setting, too
         int colorPatternLength = getIntent().getIntExtra("colorPatternLength", 4);
         int allowedGuessRounds = getIntent().getIntExtra("allowedGuessRounds", 10);
         boolean allowDuplicates = getIntent().getBooleanExtra("allowDuplicates",false);

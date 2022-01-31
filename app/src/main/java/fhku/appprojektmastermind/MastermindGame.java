@@ -1,8 +1,9 @@
 package fhku.appprojektmastermind;
 
+import android.util.Log;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
 import fhku.appprojektmastermind.color.ColorBall;
 import fhku.appprojektmastermind.color.PresetColorBall;
 import fhku.appprojektmastermind.container.ColorGuess;
@@ -37,6 +38,7 @@ public class MastermindGame {
         COLOR_GUESS_ROUNDS.get(0).setActive();
         TARGET_LIST = ColorGuess.createTargetList(COLOR_PATTERN_LENGTH, ALLOW_DUPLICATES, PLAY_COLORS);
 
+        //  TODO: delete those Sout's
         System.out.println("TargetList: " + TARGET_LIST.getColorBalls());
         System.out.println("ColorRepertoire: " + COLOR_REPERTOIRE.getColorBalls());
     }
@@ -61,17 +63,50 @@ public class MastermindGame {
     public void validateLatestColorGuess() {
         if (hasWon()) {
             //TODO: show "dialog_win"
+            Log.i("playing", "YOU'VE WON!");
         } else if (allGuessesUsed()) {
             COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).setDone();
             //  TODO: show "dialog_lose"
             //  TODO: show actual winning colors
+            Log.i("playing", "YOU'VE LOST!");
         } else {
             playNextGuess();
+            Log.i("playing", "next round!");
         }
     }
 
+    public List<Integer> getNumOfValidatedColors(List<ColorBall> currRound) {
+        int rightPos = 0;
+        int wrongPos;
+
+        // get all ColorValues as int
+        List<Integer> target = new ArrayList<>();
+        List<Integer> curr = new ArrayList<>();
+        for (int i = 0; i < currRound.size(); i++) {
+            target.add(TARGET_LIST.getColorBalls().get(i).getColorInt());
+            curr.add(currRound.get(i).getColorInt());
+        }
+
+        for (int i = 0; i < target.size(); i++) {
+               if (target.get(i).equals(curr.get(i))) {
+                   rightPos++;
+               }
+        }
+
+        // TODO: retainAll has to be fixed;
+        //  what happens if duplicates are allowed?
+        target.retainAll(currRound);
+        wrongPos = target.size() - rightPos;
+
+        return new ArrayList<>(Arrays.asList(rightPos, wrongPos));
+    }
+
+
     private boolean hasWon() {
-        return TARGET_LIST.equals(COLOR_GUESS_ROUNDS.get(activeColorGuessIndex));
+        List<Integer> rightWrongColors = getNumOfValidatedColors(COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).getColorBalls());
+        if (rightWrongColors.get(0) == 4) return true;
+
+        return false;
     }
 
     private boolean allGuessesUsed() {
