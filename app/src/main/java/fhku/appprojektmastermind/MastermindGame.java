@@ -1,13 +1,14 @@
 package fhku.appprojektmastermind;
 
 import android.util.Log;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
+
 import fhku.appprojektmastermind.color.ColorBall;
 import fhku.appprojektmastermind.color.PresetColorBall;
 import fhku.appprojektmastermind.container.ColorGuess;
 import fhku.appprojektmastermind.container.ColorRepertoire;
+import fhku.appprojektmastermind.container.RoundValidator;
 
 public class MastermindGame {
     private final int COLOR_PATTERN_LENGTH;
@@ -57,7 +58,9 @@ public class MastermindGame {
     }
 
     public void validateLatestColorGuess() {
-        if (hasWon()) {
+        RoundValidator currRound = new RoundValidator(COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).getColorBalls(), TARGET_LIST.getColorBalls());
+
+        if (currRound.getNumRightPos() == currRound.getColorPatternLength()) {
             //TODO: show "dialog_win"
             Log.i("playing", "YOU'VE WON!");
         } else if (allGuessesUsed()) {
@@ -69,49 +72,6 @@ public class MastermindGame {
             playNextGuess();
             Log.i("playing", "next round!");
         }
-    }
-
-    // gives back number of correct colors on right position and number of correct colors on wrong position
-    public List<Integer> getNumOfValidatedColors(List<ColorBall> currRound) {
-        int rightPos = 0;
-        int wrongPos = 0;
-
-        // get all ColorValues as Integer
-        List<Integer> target = new ArrayList<>();
-        List<Integer> curr = new ArrayList<>();
-        for (int i = 0; i < currRound.size(); i++) {
-            target.add(TARGET_LIST.getColorBalls().get(i).getColorInt());
-            curr.add(currRound.get(i).getColorInt());
-        }
-
-        // count correct colors on correct position
-        for (int i = 0; i < target.size(); i++) {
-               if (target.get(i).equals(curr.get(i))) {
-                   rightPos++;
-                   target.set(i, null);
-                   curr.set(i, null);
-               }
-        }
-
-        // count colors on wrong position
-        for (int i = 0; i < target.size(); i++) {
-            if (target.get(i) != null || curr.get(i) != null) {
-                for (int j = 0; j < target.size(); j++) {
-                    if (target.get(j) != null && curr.get(i).equals(target.get(j))) {
-                        wrongPos++;
-                        target.set(j, null);
-                        break;
-                    }
-                }
-            }
-        }
-        return new ArrayList<>(Arrays.asList(rightPos, wrongPos));
-    }
-
-
-    private boolean hasWon() {
-        List<Integer> rightWrongColors = getNumOfValidatedColors(COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).getColorBalls());
-        return rightWrongColors.get(0) == 4;
     }
 
     private boolean allGuessesUsed() {
