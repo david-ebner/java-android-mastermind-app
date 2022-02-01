@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         btn_guide.setOnClickListener(view ->{
             Intent intent = new Intent(view.getContext(), GuideActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
         });
     }
 
@@ -74,5 +75,6 @@ public class MainActivity extends AppCompatActivity {
     private void openGameTemporaryHackForTesting() {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 }
