@@ -49,7 +49,7 @@ public class GameActivity extends AppCompatActivity {
 
         // assign the game's ColorRepertoire
         ColorRepertoireView colorRepertoireView = findViewById(R.id.colorRepertoire);
-        colorRepertoireView.setColorRepertoire(game.getColorRepertoire());
+        colorRepertoireView.setColorList(game.getColorRepertoire());
 
         // assign the game's TargetList
         //  TODO: make a TargetList View and implement it here

@@ -55,10 +55,10 @@ public class ColorGuessAdapter extends RecyclerView.Adapter<ColorGuessAdapter.Co
     @Override
     public void onBindViewHolder(@NonNull ColorGuessViewHolder holder, int position) {
         ColorGuess guess = guessRounds.get(position);
-        holder.colorGuessView.setColorGuess(guess);
+        holder.colorGuessView.setColorList(guess);
 
         //  TODO: Button should only be enabled if all Colorsball are inserted (guess.isDone())
-        holder.buttonSubmit.setEnabled(guess.isActive());
+        holder.buttonSubmit.setEnabled(guess.isModifiable());
         holder.buttonSubmit.setVisibility(guess.isDone() ? View.INVISIBLE : View.VISIBLE);
 
         holder.buttonSubmit.setOnClickListener(view -> {

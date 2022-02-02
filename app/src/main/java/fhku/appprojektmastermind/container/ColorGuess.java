@@ -2,42 +2,13 @@ package fhku.appprojektmastermind.container;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import fhku.appprojektmastermind.color.ColorBall;
 
-public class ColorGuess {
-    private List<ColorBall> colorBalls;
-    private boolean active = false;
-    private boolean done = false;
+public class ColorGuess extends ColorList{
 
     public ColorGuess(List<ColorBall> colorBalls) {
-        this.colorBalls = colorBalls;
-    }
-
-    public List<ColorBall> getColorBalls() {
-        return new ArrayList<>(colorBalls);
-    }
-
-    public void setColorBalls(List<ColorBall> colorBalls) {
-        this.colorBalls = colorBalls;
-    }
-
-    public void setActive() {
-        this.active = true;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setDone() {
-        this.done = true;
-        this.active = false;
-    }
-
-    public boolean isDone() {
-        return done;
+        super(colorBalls);
     }
 
     public static List<ColorGuess> emptyGuessList(int patternLength, int guessRounds) {
@@ -46,28 +17,5 @@ public class ColorGuess {
             list.add(new ColorGuess(ColorBall.createEmptyColorBalls(patternLength)));
         }
         return list;
-    }
-
-
-    public static ColorGuess createTargetList(int patternLength, boolean allowDuplicates, List<ColorBall> playColors){
-        List<ColorBall> targetList = new ArrayList<>();
-        Random rand = new Random();
-
-        if (allowDuplicates) {  // Duplicates allowed
-            for (int i = 0; i < patternLength; i++) {
-                int randIndex = rand.nextInt(playColors.size());
-
-                targetList.add(playColors.get(randIndex));
-            }
-        } else {  // Duplicates not allowed
-            List<ColorBall> colorsAllowed = new ArrayList<>(playColors);
-            for (int i = 0; i < patternLength; i++) {
-                int randIndex = rand.nextInt(colorsAllowed.size());
-
-                targetList.add(colorsAllowed.get(randIndex));
-                colorsAllowed.remove(randIndex);
-            }
-        }
-        return new ColorGuess(targetList);
     }
 }

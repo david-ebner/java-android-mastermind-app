@@ -7,6 +7,7 @@ import java.util.List;
 import fhku.appprojektmastermind.color.ColorBall;
 import fhku.appprojektmastermind.color.PresetColorBall;
 import fhku.appprojektmastermind.container.ColorGuess;
+import fhku.appprojektmastermind.container.ColorList;
 import fhku.appprojektmastermind.container.ColorRepertoire;
 import fhku.appprojektmastermind.container.RoundValidator;
 
@@ -18,7 +19,7 @@ public class MastermindGame {
 
     private final List<ColorGuess> COLOR_GUESS_ROUNDS;
     private final ColorRepertoire COLOR_REPERTOIRE;
-    private final ColorGuess TARGET_LIST;
+    private final ColorList TARGET_LIST;
 
     private int activeColorGuessIndex = 0;
 
@@ -36,8 +37,8 @@ public class MastermindGame {
         // set up a ColorRepertoire containing all available PresetColorBalls
         COLOR_REPERTOIRE = new ColorRepertoire(PLAY_COLORS);
 
-        COLOR_GUESS_ROUNDS.get(0).setActive();
-        TARGET_LIST = ColorGuess.createTargetList(COLOR_PATTERN_LENGTH, ALLOW_DUPLICATES, PLAY_COLORS);
+        COLOR_GUESS_ROUNDS.get(0).setModifiable();
+        TARGET_LIST = ColorList.createTargetList(COLOR_PATTERN_LENGTH, ALLOW_DUPLICATES, PLAY_COLORS);
     }
 
     public List<ColorGuess> getGuessRounds() {
@@ -48,13 +49,13 @@ public class MastermindGame {
         return COLOR_REPERTOIRE;
     }
 
-    public ColorGuess getTargetList() {
+    public ColorList getTargetList() {
         return TARGET_LIST;
     }
 
     private void playNextGuess() {
         COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).setDone();
-        COLOR_GUESS_ROUNDS.get(++activeColorGuessIndex).setActive();
+        COLOR_GUESS_ROUNDS.get(++activeColorGuessIndex).setModifiable();
     }
 
     public void validateLatestColorGuess() {
