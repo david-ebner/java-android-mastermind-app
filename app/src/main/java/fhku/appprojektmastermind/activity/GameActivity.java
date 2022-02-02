@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import fhku.appprojektmastermind.container.ColorGuessAdapter;
+import fhku.appprojektmastermind.container.GuessRoundAdapter;
 import fhku.appprojektmastermind.container.ColorRepertoireView;
 import fhku.appprojektmastermind.MastermindGame;
 import fhku.appprojektmastermind.R;
@@ -35,14 +35,14 @@ public class GameActivity extends AppCompatActivity {
 
         game = new MastermindGame(colorPatternLength, allowedGuessRounds, allowDuplicates);
 
-        // set up a ColorGuessAdapter for the RecyclerView
-        ColorGuessAdapter adapter = new ColorGuessAdapter(game.getGuessRounds(), game);
+        // set up a GuessRoundAdapter for the RecyclerView
+        GuessRoundAdapter adapter = new GuessRoundAdapter(game);
 
         // set up a LinearLayoutManager with reverse order
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
 
-        // assign the game's ColorGuessAdapter and LayoutManager to the RecyclerView
+        // assign the game's GuessRoundAdapter and LayoutManager to the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.guessRoundsView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(linearLayoutManager);

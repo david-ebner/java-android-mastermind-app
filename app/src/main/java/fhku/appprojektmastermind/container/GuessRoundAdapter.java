@@ -15,25 +15,27 @@ import java.util.List;
 import fhku.appprojektmastermind.MastermindGame;
 import fhku.appprojektmastermind.R;
 
-public class ColorGuessAdapter extends RecyclerView.Adapter<ColorGuessAdapter.ColorGuessViewHolder> {
+public class GuessRoundAdapter extends RecyclerView.Adapter<GuessRoundAdapter.GuessRoundViewHolder> {
 
     protected MastermindGame game;
     protected List<ColorGuess> guessRounds;
 
-    public ColorGuessAdapter(List<ColorGuess> guessRounds, MastermindGame game) {
-        this.guessRounds = guessRounds;
-        this.game = game; //TODO: really hand over 'game' ??
+    public GuessRoundAdapter(MastermindGame game) {
+        this.game = game;
+        this.guessRounds = game.getGuessRounds();
     }
 
     // implements one guess-round
-    public static class ColorGuessViewHolder extends RecyclerView.ViewHolder {
+    public static class GuessRoundViewHolder extends RecyclerView.ViewHolder {
         public ColorGuessView colorGuessView;
         public Button buttonSubmit;
+        public RoundValidatorView roundValidatorView;
 
-        public ColorGuessViewHolder(@NonNull View itemView) {
+        public GuessRoundViewHolder(@NonNull View itemView) {
             super(itemView);
             colorGuessView = itemView.findViewById(R.id.colorGuessView);
             buttonSubmit = itemView.findViewById(R.id.button_submit);
+            roundValidatorView = itemView.findViewById(R.id.roundValidatorView);
 
             //TODO: instead of the button, the match-information for previous guesses should be displayed
         }
@@ -46,20 +48,21 @@ public class ColorGuessAdapter extends RecyclerView.Adapter<ColorGuessAdapter.Co
 
     @NonNull
     @Override
-    public ColorGuessViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GuessRoundViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         MaterialCardView card = (MaterialCardView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_color_guess, parent, false);
-        return new ColorGuessViewHolder(card);
+        return new GuessRoundViewHolder(card);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ColorGuessViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GuessRoundViewHolder holder, int position) {
         ColorGuess guess = guessRounds.get(position);
         holder.colorGuessView.setColorList(guess);
 
         //  TODO: Button should only be enabled if all Colorsball are inserted (guess.isDone())
         holder.buttonSubmit.setEnabled(guess.isModifiable());
-        holder.buttonSubmit.setVisibility(guess.isDone() ? View.INVISIBLE : View.VISIBLE);
+        holder.buttonSubmit.setVisibility(guess.isModifiable() ? View.VISIBLE : View.INVISIBLE);
+        holder.roundValidatorView.setVisibility(guess.isModifiable() ? View.INVISIBLE : View.VISIBLE);
 
         holder.buttonSubmit.setOnClickListener(view -> {
             game.validateLatestColorGuess();

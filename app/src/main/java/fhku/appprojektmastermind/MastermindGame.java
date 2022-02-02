@@ -59,13 +59,18 @@ public class MastermindGame {
     }
 
     public void validateLatestColorGuess() {
-        RoundValidator currRound = new RoundValidator(COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).getColorBalls(), TARGET_LIST.getColorBalls());
+        ColorGuess latestGuess = COLOR_GUESS_ROUNDS.get(activeColorGuessIndex);
 
-        if (currRound.getNumRightPos() == currRound.getColorPatternLength()) {
+        RoundValidator currRound = new RoundValidator(
+                latestGuess.getColorBalls(),
+                TARGET_LIST.getColorBalls()
+        );
+
+        if (hasWon(currRound)) {
             //TODO: show "dialog_win"
             Log.i("playing", "YOU'VE WON!");
         } else if (allGuessesUsed()) {
-            COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).setDone();
+            latestGuess.setDone();
             //  TODO: show "dialog_lose"
             //  TODO: show actual winning colors
             Log.i("playing", "YOU'VE LOST!");
@@ -73,6 +78,10 @@ public class MastermindGame {
             playNextGuess();
             Log.i("playing", "next round!");
         }
+    }
+
+    private boolean hasWon(RoundValidator currRound) {
+        return currRound.getNumRightPos() == currRound.getColorPatternLength();
     }
 
     private boolean allGuessesUsed() {
