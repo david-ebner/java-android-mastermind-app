@@ -2,6 +2,7 @@ package fhku.appprojektmastermind;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fhku.appprojektmastermind.color.ColorBall;
@@ -38,7 +39,7 @@ public class MastermindGame {
         COLOR_REPERTOIRE = new ColorRepertoire(PLAY_COLORS);
 
         COLOR_GUESS_ROUNDS.get(0).setModifiable();
-        TARGET_LIST = ColorList.createTargetList(COLOR_PATTERN_LENGTH, ALLOW_DUPLICATES, PLAY_COLORS);
+        TARGET_LIST = ColorList.createRandomTargetList(COLOR_PATTERN_LENGTH, ALLOW_DUPLICATES, PLAY_COLORS);
     }
 
     public List<ColorGuess> getGuessRounds() {
@@ -58,15 +59,15 @@ public class MastermindGame {
         COLOR_GUESS_ROUNDS.get(++activeColorGuessIndex).setModifiable();
     }
 
-    public void validateLatestColorGuess() {
+    public RoundValidator validateLatestColorGuessRound() {
         ColorGuess latestGuess = COLOR_GUESS_ROUNDS.get(activeColorGuessIndex);
 
-        RoundValidator currRound = new RoundValidator(
+        RoundValidator roundValidator = RoundValidator.validate(
                 latestGuess.getColorBalls(),
                 TARGET_LIST.getColorBalls()
         );
 
-        if (hasWon(currRound)) {
+        if (hasWon(roundValidator)) {
             //TODO: show "dialog_win"
             Log.i("playing", "YOU'VE WON!");
         } else if (allGuessesUsed()) {
@@ -78,6 +79,7 @@ public class MastermindGame {
             playNextGuess();
             Log.i("playing", "next round!");
         }
+        return roundValidator;
     }
 
     private boolean hasWon(RoundValidator currRound) {

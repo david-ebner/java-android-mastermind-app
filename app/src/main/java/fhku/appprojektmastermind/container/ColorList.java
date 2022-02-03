@@ -37,7 +37,7 @@ public class ColorList {
         return done;
     }
 
-    public static ColorList createTargetList(int patternLength, boolean allowDuplicates, List<ColorBall> playColors){
+    public static ColorList createRandomTargetList(int patternLength, boolean allowDuplicates, List<ColorBall> playColors){
         List<ColorBall> targetList = new ArrayList<>();
         Random rand = new Random();
 

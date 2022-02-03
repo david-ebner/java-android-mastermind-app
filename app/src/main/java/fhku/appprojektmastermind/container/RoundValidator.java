@@ -4,48 +4,78 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fhku.appprojektmastermind.color.ColorBall;
+import fhku.appprojektmastermind.color.PresetColorBall;
 
-public class RoundValidator {
-    private final int numRightPos;
-    private final int numWrongPos;
-    private final int colorPatternLength;
+public class RoundValidator extends ColorList {
+    private int numRightPos;
+    private int numWrongPos;
+    private int colorPatternLength;
 
-    public RoundValidator(List<ColorBall> currRound, List<ColorBall> targetColors) {
+    public RoundValidator(List<ColorBall> colorBalls) {
+        super(colorBalls);
+    }
+
+    public static RoundValidator validate(List<ColorBall> currRound, List<ColorBall> targetColors) { // TODO: not pretty yet
         int rightPos = 0;
         int wrongPos = 0;
-        List<Integer> curr = new ArrayList<>();
-        List<Integer> target = new ArrayList<>();
+        List<Integer> currColorInts = new ArrayList<>();
+        List<Integer> targetColorInts = new ArrayList<>();
 
         for (int i = 0; i < targetColors.size(); i++) {
-            curr.add(currRound.get(i).getColorInt());
-            target.add(targetColors.get(i).getColorInt());
+            currColorInts.add(currRound.get(i).getColorInt());
+            targetColorInts.add(targetColors.get(i).getColorInt());
         }
 
         // get rightPos
-        for (int i = 0; i < target.size(); i++) {
-            if (target.get(i).equals(curr.get(i))) {
+        for (int i = 0; i < targetColorInts.size(); i++) {
+            if (targetColorInts.get(i).equals(currColorInts.get(i))) {
                 rightPos++;
-                target.set(i, null);
-                curr.set(i, null);
+                targetColorInts.set(i, null);
+                currColorInts.set(i, null);
             }
         }
 
         // get wrongPos
-        for (int i = 0; i < target.size(); i++) {
-            if (target.get(i) != null || curr.get(i) != null) {
-                for (int j = 0; j < target.size(); j++) {
-                    if (target.get(j) != null && curr.get(i).equals(target.get(j))) {
+        for (int i = 0; i < targetColorInts.size(); i++) {
+            if (targetColorInts.get(i) != null || currColorInts.get(i) != null) {
+                for (int j = 0; j < targetColorInts.size(); j++) {
+                    if (targetColorInts.get(j) != null && currColorInts.get(i).equals(targetColorInts.get(j))) {
                         wrongPos++;
-                        target.set(j, null);
+                        targetColorInts.set(j, null);
                         break;
                     }
                 }
             }
         }
 
-        this.numRightPos = rightPos;
-        this.numWrongPos = wrongPos;
-        this.colorPatternLength = currRound.size();
+        List<ColorBall> validationColorBalls = new ArrayList<>();
+        for (int i = 0; i < rightPos; i++) {
+            validationColorBalls.add(PresetColorBall.WHITE.getBall());
+        }
+        for (int i = 0; i < wrongPos; i++) {
+            validationColorBalls.add(PresetColorBall.BLACK.getBall());
+        }
+        while (validationColorBalls.size() < currRound.size()) {
+            validationColorBalls.add(PresetColorBall.GREY.getBall());
+        }
+
+        RoundValidator roundValidator = new RoundValidator(validationColorBalls);
+        roundValidator.setNumRightPos(rightPos);
+        roundValidator.setNumWrongPos(wrongPos);
+        roundValidator.setColorPatternLength(currRound.size());
+        return roundValidator;
+    }
+
+    public void setNumRightPos(int numRightPos) {
+        this.numRightPos = numRightPos;
+    }
+
+    public void setNumWrongPos(int numWrongPos) {
+        this.numWrongPos = numWrongPos;
+    }
+
+    public void setColorPatternLength(int colorPatternLength) {
+        this.colorPatternLength = colorPatternLength;
     }
 
     public int getNumRightPos() {

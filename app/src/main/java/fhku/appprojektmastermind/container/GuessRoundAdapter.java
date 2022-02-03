@@ -36,8 +36,6 @@ public class GuessRoundAdapter extends RecyclerView.Adapter<GuessRoundAdapter.Gu
             colorGuessView = itemView.findViewById(R.id.colorGuessView);
             buttonSubmit = itemView.findViewById(R.id.button_submit);
             roundValidatorView = itemView.findViewById(R.id.roundValidatorView);
-
-            //TODO: instead of the button, the match-information for previous guesses should be displayed
         }
     }
 
@@ -58,17 +56,15 @@ public class GuessRoundAdapter extends RecyclerView.Adapter<GuessRoundAdapter.Gu
     public void onBindViewHolder(@NonNull GuessRoundViewHolder holder, int position) {
         ColorGuess guess = guessRounds.get(position);
         holder.colorGuessView.setColorList(guess);
+        holder.roundValidatorView.setColorList(guess.getRoundValidator());
 
-        //  TODO: Button should only be enabled if all Colorsball are inserted (guess.isDone())
         holder.buttonSubmit.setEnabled(guess.isModifiable());
         holder.buttonSubmit.setVisibility(guess.isModifiable() ? View.VISIBLE : View.INVISIBLE);
         holder.roundValidatorView.setVisibility(guess.isModifiable() ? View.INVISIBLE : View.VISIBLE);
 
         holder.buttonSubmit.setOnClickListener(view -> {
-            game.validateLatestColorGuess();
+            guess.setRoundValidator(game.validateLatestColorGuessRound());
             notifyDataSetChanged();
         });
-
-        //TODO: match-information for previous guesses should be filled
     }
 }
