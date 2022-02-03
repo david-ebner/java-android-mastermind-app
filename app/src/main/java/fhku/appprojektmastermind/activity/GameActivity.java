@@ -29,11 +29,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         // set the difficulty according to an Intent from the MainActivity
-        int colorPatternLength = getIntent().getIntExtra("colorPatternLength", 4);
-        int allowedGuessRounds = getIntent().getIntExtra("allowedGuessRounds", 10);
-        boolean allowDuplicates = getIntent().getBooleanExtra("allowDuplicates",true);
-
-        game = new MastermindGame(colorPatternLength, allowedGuessRounds, allowDuplicates);
+        MastermindGame.Difficulty difficulty = (MastermindGame.Difficulty) getIntent().getSerializableExtra("difficulty");
+        game = new MastermindGame(difficulty);
 
         // set up a GuessRoundAdapter for the RecyclerView
         GuessRoundAdapter adapter = new GuessRoundAdapter(game);

@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import java.util.Objects;
 
+import fhku.appprojektmastermind.MastermindGame;
 import fhku.appprojektmastermind.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,27 +54,24 @@ public class MainActivity extends AppCompatActivity {
         btn_master.setEnabled(false);
 
         btn_kids.setOnClickListener(view -> {
-            //  TODO: Intent Kids Mode
-            openGameTemporaryHackForTesting();
+            startNewGame(MastermindGame.Difficulty.KIDS);
         });
         btn_easy.setOnClickListener(view -> {
-            //  TODO: Intent Easy Mode
-            openGameTemporaryHackForTesting();
+            startNewGame(MastermindGame.Difficulty.EASY);
         });
         btn_hard.setOnClickListener(view -> {
-            //  TODO: Intent Hard Mode
-            openGameTemporaryHackForTesting();
+            startNewGame(MastermindGame.Difficulty.HARD);
         });
         btn_master.setOnClickListener(view -> {
-            //  TODO: Intent Master Mode
-            openGameTemporaryHackForTesting();
+            startNewGame(MastermindGame.Difficulty.MASTER);
         });
 
         dialog.show();
     }
 
-    private void openGameTemporaryHackForTesting() {
+    private void startNewGame(MastermindGame.Difficulty difficulty) {
         Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("difficulty", difficulty);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }

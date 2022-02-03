@@ -2,7 +2,6 @@ package fhku.appprojektmastermind;
 
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fhku.appprojektmastermind.color.ColorBall;
@@ -13,9 +12,9 @@ import fhku.appprojektmastermind.container.ColorRepertoire;
 import fhku.appprojektmastermind.container.RoundValidator;
 
 public class MastermindGame {
-    private final int COLOR_PATTERN_LENGTH;
-    private final int ALLOWED_GUESS_ROUNDS;
-    private final boolean ALLOW_DUPLICATES;
+    private  int colorPatternLength;
+    private  int allowedGuessRounds;
+    private  boolean allowDuplicates;
     private final List<ColorBall> PLAY_COLORS;
 
     private final List<ColorGuess> COLOR_GUESS_ROUNDS;
@@ -24,22 +23,37 @@ public class MastermindGame {
 
     private int activeColorGuessIndex = 0;
 
-    public MastermindGame(int colorPatternLength, int allowedGuessRounds, boolean allowDuplicates) {
-        COLOR_PATTERN_LENGTH = colorPatternLength;
-        ALLOWED_GUESS_ROUNDS = allowedGuessRounds;
-        ALLOW_DUPLICATES = allowDuplicates;
+    public enum Difficulty {
+        KIDS, EASY, HARD, MASTER
+    }
+
+    public MastermindGame(Difficulty difficulty) {
+        setDifficulty(difficulty);
 
         // set the Play Colors
         PLAY_COLORS = PresetColorBall.getPlayColors();
 
-        COLOR_GUESS_ROUNDS = ColorGuess.emptyGuessList(COLOR_PATTERN_LENGTH, ALLOWED_GUESS_ROUNDS);
+        COLOR_GUESS_ROUNDS = ColorGuess.emptyGuessList(this.colorPatternLength, this.allowedGuessRounds);
         setupColorGuessListForTesting();
 
         // set up a ColorRepertoire containing all available PresetColorBalls
         COLOR_REPERTOIRE = new ColorRepertoire(PLAY_COLORS);
 
         COLOR_GUESS_ROUNDS.get(0).setModifiable();
-        TARGET_LIST = ColorList.createRandomTargetList(COLOR_PATTERN_LENGTH, ALLOW_DUPLICATES, PLAY_COLORS);
+        TARGET_LIST = ColorList.createRandomTargetList(this.colorPatternLength, this.allowDuplicates, PLAY_COLORS);
+    }
+
+    private void setDifficulty(Difficulty difficulty) {
+        switch (difficulty) {
+            case MASTER:
+            case HARD:
+            case KIDS:
+            case EASY:
+            default:
+                this.colorPatternLength = 4;
+                this.allowedGuessRounds = 10;
+                this.allowDuplicates = true;
+        }
     }
 
     public List<ColorGuess> getGuessRounds() {
@@ -87,7 +101,7 @@ public class MastermindGame {
     }
 
     private boolean allGuessesUsed() {
-        return activeColorGuessIndex + 1 == ALLOWED_GUESS_ROUNDS;
+        return activeColorGuessIndex + 1 == allowedGuessRounds;
     }
 
 
