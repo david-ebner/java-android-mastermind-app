@@ -34,7 +34,6 @@ public class MastermindGame {
         PLAY_COLORS = PresetColorBall.getPlayColors();
 
         COLOR_GUESS_ROUNDS = ColorGuess.emptyGuessList(this.colorPatternLength, this.allowedGuessRounds);
-        setupColorGuessListForTesting();
 
         // set up a ColorRepertoire containing all available PresetColorBalls
         COLOR_REPERTOIRE = new ColorRepertoire(PLAY_COLORS);
@@ -46,13 +45,25 @@ public class MastermindGame {
     private void setDifficulty(Difficulty difficulty) {
         switch (difficulty) {
             case MASTER:
+                this.colorPatternLength = 5;
+                this.allowedGuessRounds = 10;
+                this.allowDuplicates = true;
+                break;
             case HARD:
+                this.colorPatternLength = 4;
+                this.allowedGuessRounds = 10;
+                this.allowDuplicates = true;
+                break;
             case KIDS:
+                this.colorPatternLength = 3;
+                this.allowedGuessRounds = 10;
+                this.allowDuplicates = false;
+                break;
             case EASY:
             default:
                 this.colorPatternLength = 4;
                 this.allowedGuessRounds = 10;
-                this.allowDuplicates = true;
+                this.allowDuplicates = false;
         }
     }
 
@@ -102,27 +113,5 @@ public class MastermindGame {
 
     private boolean allGuessesUsed() {
         return activeColorGuessIndex + 1 == allowedGuessRounds;
-    }
-
-
-    private void setupColorGuessListForTesting() {
-        COLOR_GUESS_ROUNDS.set(0, new ColorGuess(List.of(
-                PresetColorBall.RED.getBall(),
-                PresetColorBall.GREEN.getBall(),
-                PresetColorBall.BLUE.getBall(),
-                PresetColorBall.YELLOW.getBall()
-        )));
-        /*COLOR_GUESS_ROUNDS.set(1, new ColorGuess(List.of(
-                PresetColorBall.BROWN.getBall(),
-                PresetColorBall.RED.getBall(),
-                PresetColorBall.GREEN.getBall(),
-                PresetColorBall.YELLOW.getBall()
-        )));
-        COLOR_GUESS_ROUNDS.set(2, new ColorGuess(List.of(
-                PresetColorBall.YELLOW.getBall(),
-                new EmptyColorBall(),
-                PresetColorBall.RED.getBall(),
-                PresetColorBall.BLUE.getBall()
-        )));*/
     }
 }

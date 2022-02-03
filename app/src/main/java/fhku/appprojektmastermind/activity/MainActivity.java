@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
         Button btn_hard = dialog.findViewById(R.id.btn_difficulty_hard);
         Button btn_master = dialog.findViewById(R.id.btn_difficulty_master);
 
-        btn_kids.setEnabled(false);
-        btn_easy.setEnabled(true);
-        btn_hard.setEnabled(false);
-        btn_master.setEnabled(false);
+//        btn_kids.setEnabled(false);
+//        btn_easy.setEnabled(true);
+//        btn_hard.setEnabled(false);
+//        btn_master.setEnabled(true);
 
         btn_kids.setOnClickListener(view -> {
             startNewGame(MastermindGame.Difficulty.KIDS);
