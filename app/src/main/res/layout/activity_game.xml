@@ -6,12 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
+    <fhku.appprojektmastermind.container.TargetListView
+        android:id="@+id/targetList"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/blue_background"
-        android:text="Placeholder for the hidden solution color pattern"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +22,7 @@
         app:layout_constraintBottom_toTopOf="@+id/colorRepertoire"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/targetList" />
 
     <fhku.appprojektmastermind.container.ColorRepertoireView
         android:id="@+id/colorRepertoire"

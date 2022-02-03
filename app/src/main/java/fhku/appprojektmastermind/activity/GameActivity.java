@@ -18,6 +18,8 @@ import fhku.appprojektmastermind.container.GuessRoundAdapter;
 import fhku.appprojektmastermind.container.ColorRepertoireView;
 import fhku.appprojektmastermind.MastermindGame;
 import fhku.appprojektmastermind.R;
+import fhku.appprojektmastermind.container.TargetList;
+import fhku.appprojektmastermind.container.TargetListView;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -49,7 +51,8 @@ public class GameActivity extends AppCompatActivity {
         colorRepertoireView.setColorList(game.getColorRepertoire());
 
         // assign the game's TargetList
-        //  TODO: make a TargetList View and implement it here
+        TargetListView targetListView = findViewById(R.id.targetList);
+        targetListView.setColorList(game.getTargetList());
     }
 
     private void openLoseDialog() {

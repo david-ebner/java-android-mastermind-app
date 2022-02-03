@@ -2,11 +2,9 @@ package fhku.appprojektmastermind.container;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 
-public class RoundValidatorView extends ColorListView {
-
-    public RoundValidatorView(Context context, AttributeSet attrs) {
+public class TargetListView extends ColorListView {
+    public TargetListView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 }
