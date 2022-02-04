@@ -4,9 +4,8 @@ import java.util.List;
 
 import fhku.appprojektmastermind.color.ColorBall;
 
-public class ColorGuess extends ColorList {
-
-    public ColorGuess(List<ColorBall> colorBalls) {
+public class TargetList extends ColorList {
+    public TargetList(List<ColorBall> colorBalls) {
         super(colorBalls);
     }
 }

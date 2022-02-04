@@ -2,101 +2,98 @@ package fhku.appprojektmastermind;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fhku.appprojektmastermind.color.ColorBall;
 import fhku.appprojektmastermind.color.PresetColorBall;
 import fhku.appprojektmastermind.container.ColorGuess;
+import fhku.appprojektmastermind.container.ColorList;
 import fhku.appprojektmastermind.container.ColorRepertoire;
+import fhku.appprojektmastermind.container.GuessRound;
 import fhku.appprojektmastermind.container.RoundValidator;
 
 public class MastermindGame {
-    private final int COLOR_PATTERN_LENGTH;
-    private final int ALLOWED_GUESS_ROUNDS;
-    private final boolean ALLOW_DUPLICATES;
+    private  int colorPatternLength;
+    private  int allowedGuessRounds;
+    private  boolean allowDuplicates;
     private final List<ColorBall> PLAY_COLORS;
 
-    private final List<ColorGuess> COLOR_GUESS_ROUNDS;
+    private final List<GuessRound> GUESS_ROUNDS;
+
     private final ColorRepertoire COLOR_REPERTOIRE;
-    private final ColorGuess TARGET_LIST;
+    private final ColorList TARGET_LIST;
 
     private int activeColorGuessIndex = 0;
 
-    public MastermindGame(int colorPatternLength, int allowedGuessRounds, boolean allowDuplicates) {
-        COLOR_PATTERN_LENGTH = colorPatternLength;
-        ALLOWED_GUESS_ROUNDS = allowedGuessRounds;
-        ALLOW_DUPLICATES = allowDuplicates;
+    public enum Difficulty {
+        KIDS, EASY, HARD, MASTER
+    }
+
+    public MastermindGame(Difficulty difficulty) {
+        setDifficulty(difficulty);
 
         // set the Play Colors
         PLAY_COLORS = PresetColorBall.getPlayColors();
 
-        COLOR_GUESS_ROUNDS = ColorGuess.emptyGuessList(COLOR_PATTERN_LENGTH, ALLOWED_GUESS_ROUNDS);
-        setupColorGuessListForTesting();
+        GUESS_ROUNDS = GuessRound.emptyGuessRounds(this.colorPatternLength, this.allowedGuessRounds);
 
         // set up a ColorRepertoire containing all available PresetColorBalls
         COLOR_REPERTOIRE = new ColorRepertoire(PLAY_COLORS);
 
-        COLOR_GUESS_ROUNDS.get(0).setActive();
-        TARGET_LIST = ColorGuess.createTargetList(COLOR_PATTERN_LENGTH, ALLOW_DUPLICATES, PLAY_COLORS);
+        GUESS_ROUNDS.get(0).getColorGuess().setModifiable();
+        TARGET_LIST = ColorList.createRandomTargetList(this.colorPatternLength, this.allowDuplicates, PLAY_COLORS);
     }
 
-    public List<ColorGuess> getGuessRounds() {
-        return COLOR_GUESS_ROUNDS;
+    private void setDifficulty(Difficulty difficulty) {
+        switch (difficulty) {
+            case MASTER:
+                this.colorPatternLength = 5;
+                this.allowedGuessRounds = 15;
+                this.allowDuplicates = true;
+                break;
+            case HARD:
+                this.colorPatternLength = 4;
+                this.allowedGuessRounds = 10;
+                this.allowDuplicates = true;
+                break;
+            case KIDS:
+                this.colorPatternLength = 3;
+                this.allowedGuessRounds = 10;
+                this.allowDuplicates = false;
+                break;
+            case EASY:
+            default:
+                this.colorPatternLength = 4;
+                this.allowedGuessRounds = 10;
+                this.allowDuplicates = false;
+        }
+    }
+
+    public void showCongratulations() {
+        Log.i("game", "YOU'VE WON");
+        // TODO: use GameActivity.openWinDialog() instead
+    }
+
+    public void showGameOver() {
+        Log.i("game", "YOU'VE LOST");
+        // TODO: use GameActivity.openLoseDialog() instead
+    }
+
+    public void playNextGuess() {
+        GUESS_ROUNDS.get(activeColorGuessIndex).getColorGuess().setDone();
+        GUESS_ROUNDS.get(++activeColorGuessIndex).getColorGuess().setModifiable();
+    }
+
+    public List<GuessRound> getGuessRounds() {
+        return GUESS_ROUNDS;
     }
 
     public ColorRepertoire getColorRepertoire() {
         return COLOR_REPERTOIRE;
     }
 
-    public ColorGuess getTargetList() {
+    public ColorList getTargetList() {
         return TARGET_LIST;
-    }
-
-    private void playNextGuess() {
-        COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).setDone();
-        COLOR_GUESS_ROUNDS.get(++activeColorGuessIndex).setActive();
-    }
-
-    public void validateLatestColorGuess() {
-        RoundValidator currRound = new RoundValidator(COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).getColorBalls(), TARGET_LIST.getColorBalls());
-
-        if (currRound.getNumRightPos() == currRound.getColorPatternLength()) {
-            //TODO: show "dialog_win"
-            Log.i("playing", "YOU'VE WON!");
-        } else if (allGuessesUsed()) {
-            COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).setDone();
-            //  TODO: show "dialog_lose"
-            //  TODO: show actual winning colors
-            Log.i("playing", "YOU'VE LOST!");
-        } else {
-            playNextGuess();
-            Log.i("playing", "next round!");
-        }
-    }
-
-    private boolean allGuessesUsed() {
-        return activeColorGuessIndex + 1 == ALLOWED_GUESS_ROUNDS;
-    }
-
-
-    private void setupColorGuessListForTesting() {
-        COLOR_GUESS_ROUNDS.set(0, new ColorGuess(List.of(
-                PresetColorBall.RED.getBall(),
-                PresetColorBall.GREEN.getBall(),
-                PresetColorBall.BLUE.getBall(),
-                PresetColorBall.YELLOW.getBall()
-        )));
-        /*COLOR_GUESS_ROUNDS.set(1, new ColorGuess(List.of(
-                PresetColorBall.BROWN.getBall(),
-                PresetColorBall.RED.getBall(),
-                PresetColorBall.GREEN.getBall(),
-                PresetColorBall.YELLOW.getBall()
-        )));
-        COLOR_GUESS_ROUNDS.set(2, new ColorGuess(List.of(
-                PresetColorBall.YELLOW.getBall(),
-                new EmptyColorBall(),
-                PresetColorBall.RED.getBall(),
-                PresetColorBall.BLUE.getBall()
-        )));*/
     }
 }

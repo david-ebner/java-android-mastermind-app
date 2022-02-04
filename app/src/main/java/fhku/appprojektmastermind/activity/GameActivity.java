@@ -14,10 +14,12 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import fhku.appprojektmastermind.container.ColorGuessAdapter;
+import fhku.appprojektmastermind.container.GuessRoundAdapter;
 import fhku.appprojektmastermind.container.ColorRepertoireView;
 import fhku.appprojektmastermind.MastermindGame;
 import fhku.appprojektmastermind.R;
+import fhku.appprojektmastermind.container.TargetList;
+import fhku.appprojektmastermind.container.TargetListView;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -29,30 +31,28 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         // set the difficulty according to an Intent from the MainActivity
-        int colorPatternLength = getIntent().getIntExtra("colorPatternLength", 4);
-        int allowedGuessRounds = getIntent().getIntExtra("allowedGuessRounds", 10);
-        boolean allowDuplicates = getIntent().getBooleanExtra("allowDuplicates",true);
+        MastermindGame.Difficulty difficulty = (MastermindGame.Difficulty) getIntent().getSerializableExtra("difficulty");
+        game = new MastermindGame(difficulty);
 
-        game = new MastermindGame(colorPatternLength, allowedGuessRounds, allowDuplicates);
-
-        // set up a ColorGuessAdapter for the RecyclerView
-        ColorGuessAdapter adapter = new ColorGuessAdapter(game.getGuessRounds(), game);
+        // set up a GuessRoundAdapter for the RecyclerView
+        GuessRoundAdapter adapter = new GuessRoundAdapter(game);
 
         // set up a LinearLayoutManager with reverse order
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
 
-        // assign the game's ColorGuessAdapter and LayoutManager to the RecyclerView
+        // assign the game's GuessRoundAdapter and LayoutManager to the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.guessRoundsView);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         // assign the game's ColorRepertoire
         ColorRepertoireView colorRepertoireView = findViewById(R.id.colorRepertoire);
-        colorRepertoireView.setColorRepertoire(game.getColorRepertoire());
+        colorRepertoireView.setColorList(game.getColorRepertoire());
 
         // assign the game's TargetList
-        //  TODO: make a TargetList View and implement it here
+        TargetListView targetListView = findViewById(R.id.targetList);
+        targetListView.setColorList(game.getTargetList());
     }
 
     private void openLoseDialog() {

@@ -5,37 +5,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
-import fhku.appprojektmastermind.color.ColorBall;
-import fhku.appprojektmastermind.color.ColorBallView;
-
-public class ColorRepertoireView extends ViewGroup implements View.OnTouchListener {
-
-    private ColorRepertoire colorRepertoire;
-
-    private final int DEFAULT_DIAMETER = 50;
-    private int single_spacing;
-    private int diameter;
-    private int padding_top;
+public class ColorRepertoireView extends ColorListView implements View.OnTouchListener {
 
     public ColorRepertoireView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    private void initColorRepertoire() {
-        for (ColorBall colorBall : colorRepertoire.getColorBalls()) {
-            ColorBallView newColorBallView = new ColorBallView(getContext());
-            newColorBallView.setColorBall(colorBall);
-            this.addView(newColorBallView);
-        }
-    }
-
-    public void setColorRepertoire(ColorRepertoire colorRepertoire) {
-        this.colorRepertoire = colorRepertoire;
-        initColorRepertoire();
     }
 
     @Override
@@ -50,7 +26,7 @@ public class ColorRepertoireView extends ViewGroup implements View.OnTouchListen
         single_spacing = spacing / (CHILD_COUNT + 1);
 
         int availableWidth = width - spacing;
-        diameter = (CHILD_COUNT == 0 ? DEFAULT_DIAMETER : availableWidth / CHILD_COUNT); //TODO avoid divide by zero
+        diameter = (CHILD_COUNT == 0 ? DEFAULT_DIAMETER : availableWidth / CHILD_COUNT); // avoiding division by zero
 
         padding_top = height / 5;
 
@@ -65,21 +41,6 @@ public class ColorRepertoireView extends ViewGroup implements View.OnTouchListen
         }
 
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        final int childCount = getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View child = getChildAt(i);
-            int startPosition = (diameter + single_spacing) * i + single_spacing;
-            child.layout(
-                    startPosition,
-                    padding_top,
-                    startPosition + diameter,
-                    padding_top + diameter
-            );
-        }
     }
 
     @Override
