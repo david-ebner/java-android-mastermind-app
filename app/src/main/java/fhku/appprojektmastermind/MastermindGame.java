@@ -2,6 +2,7 @@ package fhku.appprojektmastermind;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fhku.appprojektmastermind.color.ColorBall;
@@ -9,6 +10,7 @@ import fhku.appprojektmastermind.color.PresetColorBall;
 import fhku.appprojektmastermind.container.ColorGuess;
 import fhku.appprojektmastermind.container.ColorList;
 import fhku.appprojektmastermind.container.ColorRepertoire;
+import fhku.appprojektmastermind.container.GuessRound;
 import fhku.appprojektmastermind.container.RoundValidator;
 
 public class MastermindGame {
@@ -17,7 +19,8 @@ public class MastermindGame {
     private  boolean allowDuplicates;
     private final List<ColorBall> PLAY_COLORS;
 
-    private final List<ColorGuess> COLOR_GUESS_ROUNDS;
+    private final List<GuessRound> GUESS_ROUNDS;
+
     private final ColorRepertoire COLOR_REPERTOIRE;
     private final ColorList TARGET_LIST;
 
@@ -33,12 +36,12 @@ public class MastermindGame {
         // set the Play Colors
         PLAY_COLORS = PresetColorBall.getPlayColors();
 
-        COLOR_GUESS_ROUNDS = ColorGuess.emptyGuessList(this.colorPatternLength, this.allowedGuessRounds);
+        GUESS_ROUNDS = GuessRound.emptyGuessRounds(this.colorPatternLength, this.allowedGuessRounds);
 
         // set up a ColorRepertoire containing all available PresetColorBalls
         COLOR_REPERTOIRE = new ColorRepertoire(PLAY_COLORS);
 
-        COLOR_GUESS_ROUNDS.get(0).setModifiable();
+        GUESS_ROUNDS.get(0).getColorGuess().setModifiable();
         TARGET_LIST = ColorList.createRandomTargetList(this.colorPatternLength, this.allowDuplicates, PLAY_COLORS);
     }
 
@@ -46,7 +49,7 @@ public class MastermindGame {
         switch (difficulty) {
             case MASTER:
                 this.colorPatternLength = 5;
-                this.allowedGuessRounds = 10;
+                this.allowedGuessRounds = 15;
                 this.allowDuplicates = true;
                 break;
             case HARD:
@@ -67,8 +70,23 @@ public class MastermindGame {
         }
     }
 
-    public List<ColorGuess> getGuessRounds() {
-        return COLOR_GUESS_ROUNDS;
+    public void showCongratulations() {
+        Log.i("game", "YOU'VE WON");
+        // TODO: use GameActivity.openWinDialog() instead
+    }
+
+    public void showGameOver() {
+        Log.i("game", "YOU'VE LOST");
+        // TODO: use GameActivity.openLoseDialog() instead
+    }
+
+    public void playNextGuess() {
+        GUESS_ROUNDS.get(activeColorGuessIndex).getColorGuess().setDone();
+        GUESS_ROUNDS.get(++activeColorGuessIndex).getColorGuess().setModifiable();
+    }
+
+    public List<GuessRound> getGuessRounds() {
+        return GUESS_ROUNDS;
     }
 
     public ColorRepertoire getColorRepertoire() {
@@ -77,41 +95,5 @@ public class MastermindGame {
 
     public ColorList getTargetList() {
         return TARGET_LIST;
-    }
-
-    private void playNextGuess() {
-        COLOR_GUESS_ROUNDS.get(activeColorGuessIndex).setDone();
-        COLOR_GUESS_ROUNDS.get(++activeColorGuessIndex).setModifiable();
-    }
-
-    public RoundValidator validateLatestColorGuessRound() {
-        ColorGuess latestGuess = COLOR_GUESS_ROUNDS.get(activeColorGuessIndex);
-
-        RoundValidator roundValidator = RoundValidator.validate(
-                latestGuess.getColorBalls(),
-                TARGET_LIST.getColorBalls()
-        );
-
-        if (hasWon(roundValidator)) {
-            //TODO: show "dialog_win"
-            Log.i("playing", "YOU'VE WON!");
-        } else if (allGuessesUsed()) {
-            latestGuess.setDone();
-            //  TODO: show "dialog_lose"
-            //  TODO: show actual winning colors
-            Log.i("playing", "YOU'VE LOST!");
-        } else {
-            playNextGuess();
-            Log.i("playing", "next round!");
-        }
-        return roundValidator;
-    }
-
-    private boolean hasWon(RoundValidator currRound) {
-        return currRound.getNumRightPos() == currRound.getColorPatternLength();
-    }
-
-    private boolean allGuessesUsed() {
-        return activeColorGuessIndex + 1 == allowedGuessRounds;
     }
 }

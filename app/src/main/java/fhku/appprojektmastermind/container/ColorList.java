@@ -16,6 +16,10 @@ public class ColorList {
         this.colorBalls = colorBalls;
     }
 
+    public void setColorBalls(List<ColorBall> colorBalls) {
+        this.colorBalls = colorBalls;
+    }
+
     public List<ColorBall> getColorBalls() {
         return new ArrayList<>(colorBalls);
     }

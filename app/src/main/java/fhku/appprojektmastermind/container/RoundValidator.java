@@ -15,7 +15,7 @@ public class RoundValidator extends ColorList {
         super(colorBalls);
     }
 
-    public static RoundValidator validate(List<ColorBall> currRound, List<ColorBall> targetColors) { // TODO: not pretty yet
+    public void update(List<ColorBall> currRound, List<ColorBall> targetColors) { // TODO: not pretty yet
         int rightPos = 0;
         int wrongPos = 0;
         List<Integer> currColorInts = new ArrayList<>();
@@ -56,14 +56,13 @@ public class RoundValidator extends ColorList {
             validationColorBalls.add(PresetColorBall.BLACK.getBall());
         }
         while (validationColorBalls.size() < currRound.size()) {
-            validationColorBalls.add(PresetColorBall.GREY.getBall());
+            validationColorBalls.add(new ColorBall(null));
         }
 
-        RoundValidator roundValidator = new RoundValidator(validationColorBalls);
-        roundValidator.setNumRightPos(rightPos);
-        roundValidator.setNumWrongPos(wrongPos);
-        roundValidator.setColorPatternLength(currRound.size());
-        return roundValidator;
+        this.numRightPos = rightPos;
+        this.numWrongPos = wrongPos;
+        this.colorPatternLength = currRound.size();
+        this.setColorBalls(validationColorBalls);
     }
 
     public void setNumRightPos(int numRightPos) {

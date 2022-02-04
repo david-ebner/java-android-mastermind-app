@@ -18,11 +18,9 @@ import fhku.appprojektmastermind.R;
 public class GuessRoundAdapter extends RecyclerView.Adapter<GuessRoundAdapter.GuessRoundViewHolder> {
 
     protected MastermindGame game;
-    protected List<ColorGuess> guessRounds;
 
     public GuessRoundAdapter(MastermindGame game) {
         this.game = game;
-        this.guessRounds = game.getGuessRounds();
     }
 
     // implements one guess-round
@@ -41,7 +39,7 @@ public class GuessRoundAdapter extends RecyclerView.Adapter<GuessRoundAdapter.Gu
 
     @Override
     public int getItemCount() {
-        return guessRounds.size();
+        return game.getGuessRounds().size();
     }
 
     @NonNull
@@ -54,17 +52,26 @@ public class GuessRoundAdapter extends RecyclerView.Adapter<GuessRoundAdapter.Gu
 
     @Override
     public void onBindViewHolder(@NonNull GuessRoundViewHolder holder, int position) {
-        ColorGuess guess = guessRounds.get(position);
-        holder.colorGuessView.setColorList(guess);
-        holder.roundValidatorView.setColorList(guess.getRoundValidator());
+        GuessRound guessRound = game.getGuessRounds().get(position);
 
-        holder.buttonSubmit.setEnabled(guess.isModifiable());
-        holder.buttonSubmit.setVisibility(guess.isModifiable() ? View.VISIBLE : View.INVISIBLE);
-        holder.roundValidatorView.setVisibility(guess.isModifiable() ? View.INVISIBLE : View.VISIBLE);
+        holder.colorGuessView.setColorList(guessRound.getColorGuess());
+        holder.roundValidatorView.setColorList(guessRound.getRoundValidator());
+
+        boolean isGuessRoundModifiable = guessRound.getColorGuess().isModifiable();
+        holder.buttonSubmit.setEnabled(isGuessRoundModifiable);
+        holder.buttonSubmit.setVisibility(isGuessRoundModifiable ? View.VISIBLE : View.INVISIBLE);
+        holder.roundValidatorView.setVisibility(isGuessRoundModifiable ? View.INVISIBLE : View.VISIBLE);
 
         holder.buttonSubmit.setOnClickListener(view -> {
-            guess.setRoundValidator(game.validateLatestColorGuessRound());
-            notifyDataSetChanged();
+            guessRound.validate(game.getTargetList());
+            if (guessRound.isCorrect()) {
+                game.showCongratulations();
+            } else if (position + 1 == getItemCount()) {
+                game.showGameOver();
+            } else {
+                game.playNextGuess();
+            }
+            notifyItemRangeChanged(position,2);
         });
     }
 }
