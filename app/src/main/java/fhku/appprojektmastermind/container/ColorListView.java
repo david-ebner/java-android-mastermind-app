@@ -11,8 +11,11 @@ import fhku.appprojektmastermind.color.ColorBallView;
 public class ColorListView extends ViewGroup {
     protected ColorList colorList;
 
-    public static final double PADDING_LEFT_RIGHT_MINIMUM_FACTOR = .1;
-    public static final double PADDING_TOP_BOTTOM_MINIMUM_FACTOR = .15;
+    protected int ROWS = 1;
+    protected double HORIZONTAL_PADDING_FACTOR = .3;
+    protected double VERTICAL_PADDING_FACTOR = .2;
+    protected double START_PADDING_FACTOR = 2 * HORIZONTAL_PADDING_FACTOR;
+    protected double TOP_PADDING_FACTOR = VERTICAL_PADDING_FACTOR;
 
     public ColorListView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -36,14 +39,14 @@ public class ColorListView extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int childCount = getChildCount();
-
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
 
         if (childCount != 0) {
-            double widthPerChild = (double) width / childCount;
+            double maxWidthPerChild = calculateChildWidth(calculateMaxChildrenPerRow(childCount, ROWS), width);
+            double maxHeightPerChild = calculateChildHeight(ROWS, height);
 
-            int diameter = calculateMaximumDiameter((double) height, widthPerChild);
+            int diameter = (int) Math.min(maxWidthPerChild, maxHeightPerChild);
 
             for (int i = 0; i < childCount; i++) {
                 View child = getChildAt(i);
@@ -54,15 +57,25 @@ public class ColorListView extends ViewGroup {
                 layoutParams.height = diameter;
             }
         }
-
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
     }
 
-    private int calculateMaximumDiameter(double height, double width) {
-        double maxChildWidth = width / (1 +  2 * PADDING_LEFT_RIGHT_MINIMUM_FACTOR);
-        double maxChildHeight = height / (1 + 2 * PADDING_TOP_BOTTOM_MINIMUM_FACTOR);
+    private double calculateChildWidth(int childCount, int totalWidth) {
+        double divisor = (2 * START_PADDING_FACTOR // * childWidth = padding before first and after last child
+                        + childCount // * childWidth = space for all children
+                        + (childCount - 1) * HORIZONTAL_PADDING_FACTOR); // * childWidth = paddings between children
+        return totalWidth / divisor;
+    }
 
-        return (int) Math.min(maxChildWidth, maxChildHeight);
+    private double calculateChildHeight(int rows, int totalHeight) {
+        double divisor = (2 * TOP_PADDING_FACTOR // * childHeight = padding before first and after last line
+                        + rows // * childHeight = space for all children
+                        + (rows - 1) * VERTICAL_PADDING_FACTOR); // * childHeight = padding between all rows
+        return totalHeight / divisor;
+    }
+
+    private int calculateMaxChildrenPerRow(int childCount, int rows) {
+        return (int) Math.ceil((float) childCount / rows);
     }
 
     @Override
@@ -70,15 +83,36 @@ public class ColorListView extends ViewGroup {
         int childCount = getChildCount();
         if (childCount == 0) return;
 
-        double paddedChildWidth = (double) getWidth() / childCount;
         int childDiameter = getChildAt(0).getLayoutParams().width;
-        double singlePadding = (paddedChildWidth - childDiameter) / 2;
-        int topPadding = (getHeight() - childDiameter) / 2;
+        int childrenInPreviousRows = 0;
 
-        for (int i = 0; i < childCount; i++) {
-            View child = getChildAt(i);
-            int individualStartLeft = (int) (singlePadding + paddedChildWidth * i);
-            child.layout(individualStartLeft, topPadding, individualStartLeft + childDiameter, topPadding + childDiameter);
+        for (int row = 1; row <= ROWS; row++) {
+            int childrenLeft = childCount - childrenInPreviousRows;
+            int rowsLeft = ROWS - (row - 1);
+            int childrenInRow = calculateMaxChildrenPerRow(childrenLeft, rowsLeft);
+
+            double previousRowsOffset = childDiameter * (1 + VERTICAL_PADDING_FACTOR) * (row - 1);
+            int topPadding = (int) (calculateRemainingTopPadding(childDiameter, getHeight()) + previousRowsOffset);
+
+            double startPadding = calculateRemainingStartPadding(childDiameter, childrenInRow, getWidth());
+
+            for (int i = 0; i < childrenInRow; i++) {
+                View child = getChildAt(i + childrenInPreviousRows);
+                double previousChildrenOffset = childDiameter * (1 + HORIZONTAL_PADDING_FACTOR) * i;
+                int individualStartLeft = (int) (startPadding + previousChildrenOffset);
+                child.layout(individualStartLeft, topPadding, individualStartLeft + childDiameter, topPadding + childDiameter);
+            }
+            childrenInPreviousRows += childrenInRow;
         }
+    }
+
+    private double calculateRemainingTopPadding(double childHeight, int totalHeight) {
+        double contentHeight = childHeight * (ROWS + VERTICAL_PADDING_FACTOR * (ROWS - 1));
+        return (totalHeight - contentHeight) / 2;
+    }
+
+    private double calculateRemainingStartPadding(double childWidth, int childrenPerRow, int totalWidth) {
+        double contentWidth = childWidth * (childrenPerRow + HORIZONTAL_PADDING_FACTOR * (childrenPerRow - 1));
+        return (totalWidth - contentWidth) / 2;
     }
 }
