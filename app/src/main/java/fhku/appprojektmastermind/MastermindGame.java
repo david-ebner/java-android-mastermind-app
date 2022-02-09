@@ -2,22 +2,18 @@ package fhku.appprojektmastermind;
 
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fhku.appprojektmastermind.color.ColorBall;
 import fhku.appprojektmastermind.color.PresetColorBall;
-import fhku.appprojektmastermind.container.ColorGuess;
 import fhku.appprojektmastermind.container.ColorList;
 import fhku.appprojektmastermind.container.ColorRepertoire;
 import fhku.appprojektmastermind.container.GuessRound;
-import fhku.appprojektmastermind.container.RoundValidator;
 
 public class MastermindGame {
     private  int colorPatternLength;
     private  int allowedGuessRounds;
     private  boolean allowDuplicates;
-    private final List<ColorBall> PLAY_COLORS;
 
     private final List<GuessRound> GUESS_ROUNDS;
 
@@ -34,15 +30,15 @@ public class MastermindGame {
         setDifficulty(difficulty);
 
         // set the Play Colors
-        PLAY_COLORS = PresetColorBall.getPlayColors();
+        List<ColorBall> playColors = PresetColorBall.getPlayColors();
 
         GUESS_ROUNDS = GuessRound.emptyGuessRounds(this.colorPatternLength, this.allowedGuessRounds);
 
         // set up a ColorRepertoire containing all available PresetColorBalls
-        COLOR_REPERTOIRE = new ColorRepertoire(PLAY_COLORS);
+        COLOR_REPERTOIRE = new ColorRepertoire(playColors);
 
         GUESS_ROUNDS.get(0).getColorGuess().setModifiable();
-        TARGET_LIST = ColorList.createRandomTargetList(this.colorPatternLength, this.allowDuplicates, PLAY_COLORS);
+        TARGET_LIST = ColorList.createRandomTargetList(this.colorPatternLength, this.allowDuplicates, playColors);
     }
 
     private void setDifficulty(Difficulty difficulty) {
@@ -71,18 +67,29 @@ public class MastermindGame {
     }
 
     public void showCongratulations() {
+        endGame();
         Log.i("game", "YOU'VE WON");
         // TODO: use GameActivity.openWinDialog() instead
     }
 
     public void showGameOver() {
+        endGame();
         Log.i("game", "YOU'VE LOST");
         // TODO: use GameActivity.openLoseDialog() instead
     }
 
+    private void endGame() {
+        setCurrentGuessDone();
+        this.COLOR_REPERTOIRE.setDone();
+    }
+
     public void playNextGuess() {
-        GUESS_ROUNDS.get(activeColorGuessIndex).getColorGuess().setDone();
+        setCurrentGuessDone();
         GUESS_ROUNDS.get(++activeColorGuessIndex).getColorGuess().setModifiable();
+    }
+
+    private void setCurrentGuessDone() {
+        GUESS_ROUNDS.get(activeColorGuessIndex).getColorGuess().setDone();
     }
 
     public List<GuessRound> getGuessRounds() {

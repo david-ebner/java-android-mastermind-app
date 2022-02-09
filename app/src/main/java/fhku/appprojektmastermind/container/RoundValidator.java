@@ -65,18 +65,6 @@ public class RoundValidator extends ColorList {
         this.setColorBalls(validationColorBalls);
     }
 
-    public void setNumRightPos(int numRightPos) {
-        this.numRightPos = numRightPos;
-    }
-
-    public void setNumWrongPos(int numWrongPos) {
-        this.numWrongPos = numWrongPos;
-    }
-
-    public void setColorPatternLength(int colorPatternLength) {
-        this.colorPatternLength = colorPatternLength;
-    }
-
     public int getNumRightPos() {
         return numRightPos;
     }

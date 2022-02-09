@@ -23,7 +23,6 @@ public class GuessRoundAdapter extends RecyclerView.Adapter<GuessRoundAdapter.Gu
         this.game = game;
     }
 
-    // implements one guess-round
     public static class GuessRoundViewHolder extends RecyclerView.ViewHolder {
         public ColorGuessView colorGuessView;
         public Button buttonSubmit;
@@ -65,13 +64,15 @@ public class GuessRoundAdapter extends RecyclerView.Adapter<GuessRoundAdapter.Gu
         holder.buttonSubmit.setOnClickListener(view -> {
             guessRound.validate(game.getTargetList());
             if (guessRound.isCorrect()) {
+                notifyItemChanged(position);
                 game.showCongratulations();
             } else if (position + 1 == getItemCount()) {
+                notifyItemChanged(position);
                 game.showGameOver();
             } else {
                 game.playNextGuess();
+                notifyItemRangeChanged(position,2);
             }
-            notifyItemRangeChanged(position,2);
         });
     }
 }
