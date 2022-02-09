@@ -55,12 +55,9 @@ public class ColorGuessView extends ColorListView {
                     // do nothing
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
-                    System.out.println("MMIND drag entered: " + dragReceiverView.toString());
                     break;
                 case DragEvent.ACTION_DROP:
                     ColorBallView draggedView = (ColorBallView) event.getLocalState();
-                    System.out.println("MMIND dragged view: " + draggedView.toString() +
-                            " dropped in " + dragReceiverView.toString());
 
                     ColorRepertoireView owner = (ColorRepertoireView) draggedView.getParent();
 //                    owner.removeView(draggedView);
