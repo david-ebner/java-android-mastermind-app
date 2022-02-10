@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -57,26 +56,26 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void openEndOfGameDialog(boolean hasWon) {
-        Dialog dialogue = new Dialog(this);
+        Dialog dialog = new Dialog(this);
         int contentView;
         int buttonView;
         int closeView;
         if (hasWon) {
-            contentView = R.layout.dialogue_win;
+            contentView = R.layout.dialog_win;
             buttonView = R.id.btn_win_to_menu;
             closeView = R.id.win_close;
         } else {
-            contentView = R.layout.dialogue_lose;
+            contentView = R.layout.dialog_lose;
             buttonView = R.id.btn_lose_to_menu;
             closeView = R.id.lose_close;
         }
-        dialogue.setContentView(contentView);
-        dialogue.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(contentView);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        dialogue.findViewById(buttonView).setOnClickListener(view -> backToMenu());
-        dialogue.<ImageView>findViewById(closeView).setOnClickListener(view -> dialogue.dismiss());
+        dialog.findViewById(buttonView).setOnClickListener(view -> backToMenu());
+        dialog.<ImageView>findViewById(closeView).setOnClickListener(view -> dialog.dismiss());
 
-        dialogue.show();
+        dialog.show();
     }
 
     private void backToMenu() {
