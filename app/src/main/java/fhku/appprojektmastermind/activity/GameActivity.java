@@ -12,14 +12,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import fhku.appprojektmastermind.container.GuessRoundAdapter;
 import fhku.appprojektmastermind.container.ColorRepertoireView;
 import fhku.appprojektmastermind.MastermindGame;
 import fhku.appprojektmastermind.R;
-import fhku.appprojektmastermind.container.TargetList;
 import fhku.appprojektmastermind.container.TargetListView;
 
 public class GameActivity extends AppCompatActivity {
@@ -58,34 +56,27 @@ public class GameActivity extends AppCompatActivity {
         targetListView.setColorList(game.getTargetList());
     }
 
-    private void openLoseDialog() {
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_lose);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    public void openEndOfGameDialog(boolean hasWon) {
+        Dialog dialogue = new Dialog(this);
+        int contentView;
+        int buttonView;
+        int closeView;
+        if (hasWon) {
+            contentView = R.layout.dialogue_win;
+            buttonView = R.id.btn_win_to_menu;
+            closeView = R.id.win_close;
+        } else {
+            contentView = R.layout.dialogue_lose;
+            buttonView = R.id.btn_lose_to_menu;
+            closeView = R.id.lose_close;
+        }
+        dialogue.setContentView(contentView);
+        dialogue.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button btn_lose_to_menu = dialog.findViewById(R.id.btn_lose_to_menu);
-        ImageView imageViewClose = dialog.findViewById(R.id.win_close);
+        dialogue.findViewById(buttonView).setOnClickListener(view -> backToMenu());
+        dialogue.<ImageView>findViewById(closeView).setOnClickListener(view -> dialogue.dismiss());
 
-        btn_lose_to_menu.setOnClickListener(view -> backToMenu());
-
-        imageViewClose.setOnClickListener(view -> dialog.dismiss());
-
-        dialog.show();
-    }
-
-    private void openWinDialog() {
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_win);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        Button btn_win_to_menu = dialog.findViewById(R.id.btn_win_to_menu);
-        ImageView imageViewClose = dialog.findViewById(R.id.win_close);
-
-        btn_win_to_menu.setOnClickListener(view -> backToMenu());
-
-        imageViewClose.setOnClickListener(view -> dialog.dismiss());
-
-        dialog.show();
+        dialogue.show();
     }
 
     private void backToMenu() {

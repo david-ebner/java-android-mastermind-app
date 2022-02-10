@@ -66,10 +66,10 @@ public class GuessRoundAdapter extends RecyclerView.Adapter<GuessRoundAdapter.Gu
                 guessRound.validate(game.getTargetList());
                 if (guessRound.isCorrect()) {
                     notifyItemChanged(position);
-                    game.showCongratulations();
+                    game.endGame(true);
                 } else if (position + 1 == getItemCount()) {
                     notifyItemChanged(position);
-                    game.showGameOver();
+                    game.endGame(false);
                 } else {
                     game.playNextGuess();
                     notifyItemRangeChanged(position, 2);

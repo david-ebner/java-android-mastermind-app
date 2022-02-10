@@ -1,7 +1,5 @@
 package fhku.appprojektmastermind;
 
-import android.util.Log;
-
 import java.util.List;
 
 import fhku.appprojektmastermind.activity.GameActivity;
@@ -70,22 +68,11 @@ public class MastermindGame {
         }
     }
 
-    public void showCongratulations() {
-        endGame();
-        Log.i("game", "YOU'VE WON");
-        // TODO: use GameActivity.openWinDialog() instead
-    }
-
-    public void showGameOver() {
-        endGame();
-        Log.i("game", "YOU'VE LOST");
-        // TODO: use GameActivity.openLoseDialog() instead
-    }
-
-    private void endGame() {
+    public void endGame(boolean hasWon) {
         setCurrentGuessDone();
         this.COLOR_REPERTOIRE.setDone();
         this.gameActivity.setTargetListVisibility(true);
+        this.gameActivity.openEndOfGameDialog(hasWon);
     }
 
     public void playNextGuess() {
