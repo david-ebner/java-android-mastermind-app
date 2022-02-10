@@ -13,7 +13,7 @@ public enum PresetColorBall {
     ORANGE (Color.rgb(252, 188, 38)),
     PINK (Color.rgb(254, 112, 247)),
 
-    GREY (Color.rgb(171,171,171)),
+    GREY (Color.rgb(224,224,224)),
     BLACK (Color.BLACK),
     WHITE (Color.WHITE);
 
