@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 
-import java.util.List;
-
 import fhku.appprojektmastermind.MastermindGame;
 import fhku.appprojektmastermind.R;
 

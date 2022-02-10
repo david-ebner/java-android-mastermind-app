@@ -36,7 +36,7 @@
                 android:id="@+id/roundValidatorView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/cream_main"/>
+                android:background="#00FFFFFF" />
 
             <Button
                 android:id="@+id/button_submit"
