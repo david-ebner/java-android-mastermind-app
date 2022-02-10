@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import fhku.appprojektmastermind.activity.GameActivity;
 import fhku.appprojektmastermind.color.ColorBall;
 import fhku.appprojektmastermind.color.PresetColorBall;
 import fhku.appprojektmastermind.container.ColorList;
@@ -20,13 +21,16 @@ public class MastermindGame {
     private final ColorRepertoire COLOR_REPERTOIRE;
     private final ColorList TARGET_LIST;
 
+    private final GameActivity gameActivity;
+
     private int activeColorGuessIndex = 0;
 
     public enum Difficulty {
         KIDS, EASY, HARD, MASTER
     }
 
-    public MastermindGame(Difficulty difficulty) {
+    public MastermindGame(Difficulty difficulty, GameActivity gameActivity) {
+        this.gameActivity = gameActivity;
         setDifficulty(difficulty);
 
         // set the Play Colors
@@ -81,6 +85,7 @@ public class MastermindGame {
     private void endGame() {
         setCurrentGuessDone();
         this.COLOR_REPERTOIRE.setDone();
+        this.gameActivity.setTargetListVisibility(true);
     }
 
     public void playNextGuess() {

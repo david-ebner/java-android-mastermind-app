@@ -2,10 +2,10 @@ package fhku.appprojektmastermind.color;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.util.Log;
 import android.view.View;
-
-import fhku.appprojektmastermind.R;
 
 public class ColorBallView extends View {
     private ColorBall colorBall;
@@ -26,16 +26,30 @@ public class ColorBallView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Drawable drawable;
+
+        float radius = (float) getWidth() / 2;
+
         if (colorBall.isEmpty()) {
-            drawable = getResources().getDrawable(R.drawable.color_ball_empty);
+            float strokeWidth = radius / 8;
+            canvas.drawCircle(radius, radius, radius - strokeWidth/2, emptyPaint(strokeWidth));
         } else {
-            drawable = getResources().getDrawable(R.drawable.color_ball);
-            drawable.setTint(this.colorBall.getColorInt());
+            canvas.drawCircle(radius, radius, radius, colorFilledPaint(this.colorBall.getColorInt()));
         }
-        drawable.setBounds(0, 0,
-                this.getLayoutParams().width,
-                this.getLayoutParams().height);
-        drawable.draw(canvas);
     }
+
+    private Paint colorFilledPaint(int color) {
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(color);
+        return paint;
+    }
+
+    private Paint emptyPaint(float strokeWidth) {
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(strokeWidth);
+        paint.setColor(Color.BLACK);
+        return paint;
+    }
+
 }

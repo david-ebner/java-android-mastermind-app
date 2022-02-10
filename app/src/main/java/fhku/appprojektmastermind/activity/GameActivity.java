@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -24,6 +25,7 @@ import fhku.appprojektmastermind.container.TargetListView;
 public class GameActivity extends AppCompatActivity {
 
     private MastermindGame game;
+    private TargetListView targetListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +34,7 @@ public class GameActivity extends AppCompatActivity {
 
         // set the difficulty according to an Intent from the MainActivity
         MastermindGame.Difficulty difficulty = (MastermindGame.Difficulty) getIntent().getSerializableExtra("difficulty");
-        game = new MastermindGame(difficulty);
+        game = new MastermindGame(difficulty, this);
 
         // set up a GuessRoundAdapter for the RecyclerView
         GuessRoundAdapter adapter = new GuessRoundAdapter(game);
@@ -51,7 +53,8 @@ public class GameActivity extends AppCompatActivity {
         colorRepertoireView.setColorList(game.getColorRepertoire());
 
         // assign the game's TargetList
-        TargetListView targetListView = findViewById(R.id.targetList);
+        targetListView = findViewById(R.id.targetList);
+        targetListView.setVisibility(View.GONE);
         targetListView.setColorList(game.getTargetList());
     }
 
@@ -111,6 +114,12 @@ public class GameActivity extends AppCompatActivity {
         startActivity(intent);
         this.finish();
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+    }
+
+    public void setTargetListVisibility(boolean visible) {
+        this.targetListView.setVisibility(
+                (visible ? View.VISIBLE : View.GONE)
+        );
     }
 }
 
