@@ -49,25 +49,19 @@ public class MainActivity extends AppCompatActivity {
         Button btn_master = dialog.findViewById(R.id.btn_difficulty_master);
 
 
-        btn_kids.setOnClickListener(view -> {
-            startNewGame(MastermindGame.Difficulty.KIDS);
-        });
-        btn_easy.setOnClickListener(view -> {
-            startNewGame(MastermindGame.Difficulty.EASY);
-        });
-        btn_hard.setOnClickListener(view -> {
-            startNewGame(MastermindGame.Difficulty.HARD);
-        });
-        btn_master.setOnClickListener(view -> {
-            startNewGame(MastermindGame.Difficulty.MASTER);
-        });
+        btn_kids.setOnClickListener(view -> startNewGame(MastermindGame.Difficulty.KIDS, dialog));
+        btn_easy.setOnClickListener(view -> startNewGame(MastermindGame.Difficulty.EASY, dialog));
+        btn_hard.setOnClickListener(view -> startNewGame(MastermindGame.Difficulty.HARD, dialog));
+        btn_master.setOnClickListener(view -> startNewGame(MastermindGame.Difficulty.MASTER, dialog));
 
         dialog.show();
     }
 
-    private void startNewGame(MastermindGame.Difficulty difficulty) {
+    private void startNewGame(MastermindGame.Difficulty difficulty, Dialog dialog) {
+        dialog.dismiss();
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("difficulty", difficulty);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }

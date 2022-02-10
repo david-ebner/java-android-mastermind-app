@@ -80,19 +80,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void backToMenu() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
-    // handles action bar up button
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-            overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+            backToMenu();
             return true;
         }
         return false;
@@ -101,9 +96,7 @@ public class GameActivity extends AppCompatActivity {
     // handles back button
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        this.finish();
+        super.onBackPressed();
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
