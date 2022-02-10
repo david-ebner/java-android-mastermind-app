@@ -26,4 +26,7 @@
     <string name="you_have_no_attempts_left">You have no attempts left.</string>
     <string name="lose_picture">Lose Picture</string>
     <string name="ok">OK</string>
+    <string name="guide_note">You have to guess the correct color pattern in order to win.\nAfter pressing OKyou will get a validation.\nThis validation will help you to crack the code!</string>
+    <string name="guide_heading2">Colorcode for Roundvalidation:</string>
+    <string name="guide_colorCode">White - a correct color on its correct position\nBlack - a correct color on a wrong position\nBlank - a wrong color</string>
 </resources>

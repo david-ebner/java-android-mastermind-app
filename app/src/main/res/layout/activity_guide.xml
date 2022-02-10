@@ -6,13 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".activity.GuideActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text='This will be the "how to play"'
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25">
+
+        <TextView
+            android:id="@+id/guideHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/how_to_play"
+            android:textAllCaps="true"
+            android:textColor="@color/blue_main"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="127dp"
+            tools:layout_editor_absoluteY="171dp" />
+
+        <TextView
+            android:id="@+id/guide_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/guide_note"
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="240dp" />
+
+        <TextView
+            android:id="@+id/guide_heading2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="@string/guide_heading2"
+            android:textColor="@color/blue_main"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="64dp"
+            tools:layout_editor_absoluteY="309dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/guide_colorCode"
+            tools:layout_editor_absoluteX="65dp"
+            tools:layout_editor_absoluteY="359dp" />
+
+    </LinearLayout>
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
