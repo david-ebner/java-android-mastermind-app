@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,21 +62,21 @@ public class GuessRoundAdapter extends RecyclerView.Adapter<GuessRoundAdapter.Gu
         holder.roundValidatorView.setVisibility(isGuessRoundModifiable ? View.INVISIBLE : View.VISIBLE);
 
         holder.buttonSubmit.setOnClickListener(view -> {
-            if (guessRound.getColorGuess().isFilled()) {
-                Log.i("game", "everything is filled");
-                guessRound.validate(game.getTargetList());
-                if (guessRound.isCorrect()) {
-                    notifyItemChanged(position);
-                    game.endGame(true);
-                } else if (position + 1 == getItemCount()) {
-                    notifyItemChanged(position);
-                    game.endGame(false);
-                } else {
-                    game.playNextGuess();
-                    notifyItemRangeChanged(position, 2);
-                }
+            if (!guessRound.getColorGuess().isFilled()) {
+                Toast.makeText(this.game.getGameActivity(),"A real Mastermind uses every opportunity!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            guessRound.validate(game.getTargetList());
+            if (guessRound.isCorrect()) {
+                notifyItemChanged(position);
+                game.endGame(true);
+            } else if (position + 1 == getItemCount()) {
+                notifyItemChanged(position);
+                game.endGame(false);
             } else {
-                // TODO: insert Toast here!
+                game.playNextGuess();
+                notifyItemRangeChanged(position, 2);
             }
         });
     }

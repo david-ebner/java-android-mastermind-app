@@ -95,4 +95,8 @@ public class MastermindGame {
     public ColorList getTargetList() {
         return TARGET_LIST;
     }
+
+    public GameActivity getGameActivity() {
+        return gameActivity;
+    }
 }
