@@ -62,4 +62,11 @@ public class ColorList {
         }
         return new ColorList(targetList);
     }
+
+    public boolean isFilled() {
+        for (ColorBall ball: colorBalls) {
+            if (ball.isEmpty()) return false;
+        }
+        return true;
+    }
 }

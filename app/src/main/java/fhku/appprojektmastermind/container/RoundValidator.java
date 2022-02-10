@@ -1,6 +1,7 @@
 package fhku.appprojektmastermind.container;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import fhku.appprojektmastermind.color.ColorBall;
@@ -59,6 +60,7 @@ public class RoundValidator extends ColorList {
             validationColorBalls.add(new ColorBall(null));
         }
 
+        Collections.shuffle(validationColorBalls);
         this.numRightPos = rightPos;
         this.numWrongPos = wrongPos;
         this.colorPatternLength = currRound.size();

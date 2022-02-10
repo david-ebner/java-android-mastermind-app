@@ -1,5 +1,6 @@
 package fhku.appprojektmastermind.container;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,16 +61,21 @@ public class GuessRoundAdapter extends RecyclerView.Adapter<GuessRoundAdapter.Gu
         holder.roundValidatorView.setVisibility(isGuessRoundModifiable ? View.INVISIBLE : View.VISIBLE);
 
         holder.buttonSubmit.setOnClickListener(view -> {
-            guessRound.validate(game.getTargetList());
-            if (guessRound.isCorrect()) {
-                notifyItemChanged(position);
-                game.showCongratulations();
-            } else if (position + 1 == getItemCount()) {
-                notifyItemChanged(position);
-                game.showGameOver();
+            if (guessRound.getColorGuess().isFilled()) {
+                Log.i("game", "everything is filled");
+                guessRound.validate(game.getTargetList());
+                if (guessRound.isCorrect()) {
+                    notifyItemChanged(position);
+                    game.showCongratulations();
+                } else if (position + 1 == getItemCount()) {
+                    notifyItemChanged(position);
+                    game.showGameOver();
+                } else {
+                    game.playNextGuess();
+                    notifyItemRangeChanged(position, 2);
+                }
             } else {
-                game.playNextGuess();
-                notifyItemRangeChanged(position,2);
+                // TODO: insert Toast here!
             }
         });
     }
