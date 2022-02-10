@@ -6,19 +6,19 @@ import java.util.List;
 import fhku.appprojektmastermind.color.ColorBall;
 
 public class GuessRound {
-    private ColorGuess colorGuess;
+    private ColorList colorGuess;
     private RoundValidator roundValidator;
     private int numberOfGuessRounds;
     private int currentGuessIndex;
 
     public GuessRound(int colorPatternLength, int numberOfGuessRounds, int currentGuessIndex) {
-        this.colorGuess = new ColorGuess(ColorBall.createEmptyColorBalls(colorPatternLength));
+        this.colorGuess = new ColorList(ColorBall.createEmptyColorBalls(colorPatternLength));
         this.roundValidator = new RoundValidator(new ArrayList<>());
         this.numberOfGuessRounds = numberOfGuessRounds;
         this.currentGuessIndex = currentGuessIndex;
     }
 
-    public ColorGuess getColorGuess() {
+    public ColorList getColorGuess() {
         return colorGuess;
     }
 

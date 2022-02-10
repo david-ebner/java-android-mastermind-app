@@ -22,7 +22,7 @@
 
 
             <ImageView
-                android:id="@+id/win_close"
+                android:id="@+id/lose_close"
                 android:layout_width="19dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="16dp"

@@ -1,14 +1,11 @@
 package fhku.appprojektmastermind;
 
-import android.util.Log;
-
 import java.util.List;
 
 import fhku.appprojektmastermind.activity.GameActivity;
 import fhku.appprojektmastermind.color.ColorBall;
 import fhku.appprojektmastermind.color.PresetColorBall;
 import fhku.appprojektmastermind.container.ColorList;
-import fhku.appprojektmastermind.container.ColorRepertoire;
 import fhku.appprojektmastermind.container.GuessRound;
 
 public class MastermindGame {
@@ -18,7 +15,7 @@ public class MastermindGame {
 
     private final List<GuessRound> GUESS_ROUNDS;
 
-    private final ColorRepertoire COLOR_REPERTOIRE;
+    private final ColorList COLOR_REPERTOIRE;
     private final ColorList TARGET_LIST;
 
     private final GameActivity gameActivity;
@@ -39,7 +36,7 @@ public class MastermindGame {
         GUESS_ROUNDS = GuessRound.emptyGuessRounds(this.colorPatternLength, this.allowedGuessRounds);
 
         // set up a ColorRepertoire containing all available PresetColorBalls
-        COLOR_REPERTOIRE = new ColorRepertoire(playColors);
+        COLOR_REPERTOIRE = new ColorList(playColors);
 
         GUESS_ROUNDS.get(0).getColorGuess().setModifiable();
         TARGET_LIST = ColorList.createRandomTargetList(this.colorPatternLength, this.allowDuplicates, playColors);
@@ -70,22 +67,11 @@ public class MastermindGame {
         }
     }
 
-    public void showCongratulations() {
-        endGame();
-        Log.i("game", "YOU'VE WON");
-        // TODO: use GameActivity.openWinDialog() instead
-    }
-
-    public void showGameOver() {
-        endGame();
-        Log.i("game", "YOU'VE LOST");
-        // TODO: use GameActivity.openLoseDialog() instead
-    }
-
-    private void endGame() {
+    public void endGame(boolean hasWon) {
         setCurrentGuessDone();
         this.COLOR_REPERTOIRE.setDone();
         this.gameActivity.setTargetListVisibility(true);
+        this.gameActivity.openEndOfGameDialog(hasWon);
     }
 
     public void playNextGuess() {
@@ -101,11 +87,15 @@ public class MastermindGame {
         return GUESS_ROUNDS;
     }
 
-    public ColorRepertoire getColorRepertoire() {
+    public ColorList getColorRepertoire() {
         return COLOR_REPERTOIRE;
     }
 
     public ColorList getTargetList() {
         return TARGET_LIST;
+    }
+
+    public GameActivity getGameActivity() {
+        return gameActivity;
     }
 }

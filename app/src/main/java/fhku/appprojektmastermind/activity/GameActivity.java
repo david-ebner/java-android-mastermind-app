@@ -6,20 +6,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import fhku.appprojektmastermind.container.GuessRoundAdapter;
 import fhku.appprojektmastermind.container.ColorRepertoireView;
 import fhku.appprojektmastermind.MastermindGame;
 import fhku.appprojektmastermind.R;
-import fhku.appprojektmastermind.container.TargetList;
 import fhku.appprojektmastermind.container.TargetListView;
 
 public class GameActivity extends AppCompatActivity {
@@ -58,50 +55,38 @@ public class GameActivity extends AppCompatActivity {
         targetListView.setColorList(game.getTargetList());
     }
 
-    private void openLoseDialog() {
+    public void openEndOfGameDialog(boolean hasWon) {
         Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_lose);
+        int contentView;
+        int buttonView;
+        int closeView;
+        if (hasWon) {
+            contentView = R.layout.dialog_win;
+            buttonView = R.id.btn_win_to_menu;
+            closeView = R.id.win_close;
+        } else {
+            contentView = R.layout.dialog_lose;
+            buttonView = R.id.btn_lose_to_menu;
+            closeView = R.id.lose_close;
+        }
+        dialog.setContentView(contentView);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button btn_lose_to_menu = dialog.findViewById(R.id.btn_lose_to_menu);
-        ImageView imageViewClose = dialog.findViewById(R.id.win_close);
-
-        btn_lose_to_menu.setOnClickListener(view -> backToMenu());
-
-        imageViewClose.setOnClickListener(view -> dialog.dismiss());
-
-        dialog.show();
-    }
-
-    private void openWinDialog() {
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_win);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        Button btn_win_to_menu = dialog.findViewById(R.id.btn_win_to_menu);
-        ImageView imageViewClose = dialog.findViewById(R.id.win_close);
-
-        btn_win_to_menu.setOnClickListener(view -> backToMenu());
-
-        imageViewClose.setOnClickListener(view -> dialog.dismiss());
+        dialog.findViewById(buttonView).setOnClickListener(view -> backToMenu());
+        dialog.<ImageView>findViewById(closeView).setOnClickListener(view -> dialog.dismiss());
 
         dialog.show();
     }
 
     private void backToMenu() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
-    // handles action bar up button
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-            overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+            backToMenu();
             return true;
         }
         return false;
@@ -110,9 +95,7 @@ public class GameActivity extends AppCompatActivity {
     // handles back button
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        this.finish();
+        super.onBackPressed();
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
