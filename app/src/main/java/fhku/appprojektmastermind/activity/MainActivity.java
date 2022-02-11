@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.util.Objects;
 
@@ -15,7 +18,9 @@ import fhku.appprojektmastermind.MastermindGame;
 import fhku.appprojektmastermind.R;
 
 public class MainActivity extends AppCompatActivity {
+    ImageView logo;
     Button btn_start, btn_guide;
+    Animation logoAnim, btn1Anim, btn2Anim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +28,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
+        logo = findViewById(R.id.logo);
         btn_start = findViewById(R.id.btn_start);
         btn_guide = findViewById(R.id.btn_guide);
+
+
 
 
         btn_start.setOnClickListener(view -> showCustomDialog());
@@ -35,6 +43,24 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
         });
+
+
+        // set Animations
+        logoAnim = AnimationUtils.loadAnimation(this, R.anim.start_fade_in);
+        logoAnim.setStartOffset(200);
+        logoAnim.setDuration(1200);
+
+        btn1Anim = AnimationUtils.loadAnimation(this, R.anim.start_fade_in);
+        btn1Anim.setStartOffset(700);
+        btn1Anim.setDuration(1000);
+
+        btn2Anim = AnimationUtils.loadAnimation(this, R.anim.start_fade_in);
+        btn2Anim.setStartOffset(900);
+        btn2Anim.setDuration(1000);
+
+        logo.startAnimation(logoAnim);
+        btn_start.startAnimation(btn1Anim);
+        btn_guide.startAnimation(btn2Anim);
     }
 
     // displaying the difficulty Dialog
