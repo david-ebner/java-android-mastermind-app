@@ -11,6 +11,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import fhku.appprojektmastermind.container.GuessRoundAdapter;
@@ -23,6 +25,7 @@ public class GameActivity extends AppCompatActivity {
 
     private MastermindGame game;
     private TargetListView targetListView;
+    private Animation repertoireAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +52,24 @@ public class GameActivity extends AppCompatActivity {
         ColorRepertoireView colorRepertoireView = findViewById(R.id.colorRepertoire);
         colorRepertoireView.setColorList(game.getColorRepertoire());
 
+        repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.view_animations);
+        repertoireAnim.setStartOffset(500);
+        repertoireAnim.setDuration(500);
+        colorRepertoireView.startAnimation(repertoireAnim);
+
+
+
         // assign the game's TargetList
         targetListView = findViewById(R.id.targetList);
         targetListView.setVisibility(View.GONE);
         targetListView.setColorList(game.getTargetList());
+
+
+        // set Animations
+        repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.view_animations);
+        repertoireAnim.setStartOffset(800);
+        repertoireAnim.setDuration(500);
+        colorRepertoireView.startAnimation(repertoireAnim);
     }
 
     public void openEndOfGameDialog(boolean hasWon) {

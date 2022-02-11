@@ -46,15 +46,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         // set Animations
-        logoAnim = AnimationUtils.loadAnimation(this, R.anim.start_fade_in);
+        logoAnim = AnimationUtils.loadAnimation(this, R.anim.view_animations);
         logoAnim.setStartOffset(200);
         logoAnim.setDuration(1200);
 
-        btn1Anim = AnimationUtils.loadAnimation(this, R.anim.start_fade_in);
+        btn1Anim = AnimationUtils.loadAnimation(this, R.anim.view_animations);
         btn1Anim.setStartOffset(700);
         btn1Anim.setDuration(1000);
 
-        btn2Anim = AnimationUtils.loadAnimation(this, R.anim.start_fade_in);
+        btn2Anim = AnimationUtils.loadAnimation(this, R.anim.view_animations);
         btn2Anim.setStartOffset(900);
         btn2Anim.setDuration(1000);
 
