@@ -43,7 +43,8 @@
                 android:id="@+id/button_submit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/ok" />
+                android:text="@string/ok"
+                app:cornerRadius="12dp" />
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
