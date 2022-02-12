@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -23,9 +24,8 @@ import fhku.appprojektmastermind.container.TargetListView;
 
 public class GameActivity extends AppCompatActivity {
 
-    private MastermindGame game;
     private TargetListView targetListView;
-    private Animation repertoireAnim;
+    private Animation scaleUp, scaleDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class GameActivity extends AppCompatActivity {
 
         // set the difficulty according to an Intent from the MainActivity
         MastermindGame.Difficulty difficulty = (MastermindGame.Difficulty) getIntent().getSerializableExtra("difficulty");
-        game = new MastermindGame(difficulty, this);
+        MastermindGame game = new MastermindGame(difficulty, this);
 
         // set up a GuessRoundAdapter for the RecyclerView
         GuessRoundAdapter adapter = new GuessRoundAdapter(game);
@@ -52,7 +52,7 @@ public class GameActivity extends AppCompatActivity {
         ColorRepertoireView colorRepertoireView = findViewById(R.id.colorRepertoire);
         colorRepertoireView.setColorList(game.getColorRepertoire());
 
-        repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.view_animation_start);
+        Animation repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.view_animation_start);
         repertoireAnim.setStartOffset(500);
         repertoireAnim.setDuration(500);
         colorRepertoireView.startAnimation(repertoireAnim);
@@ -89,7 +89,24 @@ public class GameActivity extends AppCompatActivity {
         dialog.setContentView(contentView);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        dialog.findViewById(buttonView).setOnClickListener(view -> backToMenu());
+        dialog.findViewById(buttonView).setOnTouchListener((v, event) -> {
+            scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+            scaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down);
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.startAnimation(scaleDown);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.performClick();
+                    v.startAnimation(scaleUp);
+
+                    backToMenu();
+                    break;
+            }
+            return false;
+        });
+
         dialog.<ImageView>findViewById(closeView).setOnClickListener(view -> dialog.dismiss());
 
         dialog.show();

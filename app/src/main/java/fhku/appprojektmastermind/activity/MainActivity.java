@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // displaying the difficulty Dialog
+    @SuppressLint("ClickableViewAccessibility")
     private void showCustomDialog() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_difficulty);
@@ -106,10 +107,78 @@ public class MainActivity extends AppCompatActivity {
         Button btn_master = dialog.findViewById(R.id.btn_difficulty_master);
 
 
-        btn_kids.setOnClickListener(view -> startNewGame(MastermindGame.Difficulty.KIDS, dialog));
-        btn_easy.setOnClickListener(view -> startNewGame(MastermindGame.Difficulty.EASY, dialog));
-        btn_hard.setOnClickListener(view -> startNewGame(MastermindGame.Difficulty.HARD, dialog));
-        btn_master.setOnClickListener(view -> startNewGame(MastermindGame.Difficulty.MASTER, dialog));
+        btn_kids.setOnTouchListener((v, event) -> {
+            scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+            scaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down);
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.startAnimation(scaleDown);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.performClick();
+                    v.startAnimation(scaleUp);
+
+                    startNewGame(MastermindGame.Difficulty.KIDS, dialog);
+                    break;
+            }
+            return false;
+        });
+
+        btn_easy.setOnTouchListener((v, event) -> {
+            scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+            scaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down);
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.startAnimation(scaleDown);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.performClick();
+                    v.startAnimation(scaleUp);
+
+                    startNewGame(MastermindGame.Difficulty.EASY, dialog);
+                    break;
+            }
+            return false;
+        });
+
+        btn_hard.setOnTouchListener((v, event) -> {
+            scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+            scaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down);
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.startAnimation(scaleDown);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.performClick();
+                    v.startAnimation(scaleUp);
+
+                    startNewGame(MastermindGame.Difficulty.HARD, dialog);
+                    break;
+            }
+            return false;
+        });
+
+        btn_master.setOnTouchListener((v, event) -> {
+            scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+            scaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down);
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.startAnimation(scaleDown);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.performClick();
+                    v.startAnimation(scaleUp);
+
+                    startNewGame(MastermindGame.Difficulty.MASTER, dialog);
+                    break;
+            }
+            return false;
+        });
+
 
         dialog.show();
     }
