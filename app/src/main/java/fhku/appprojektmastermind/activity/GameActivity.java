@@ -52,7 +52,7 @@ public class GameActivity extends AppCompatActivity {
         ColorRepertoireView colorRepertoireView = findViewById(R.id.colorRepertoire);
         colorRepertoireView.setColorList(game.getColorRepertoire());
 
-        repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.view_animations);
+        repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.view_animation_start);
         repertoireAnim.setStartOffset(500);
         repertoireAnim.setDuration(500);
         colorRepertoireView.startAnimation(repertoireAnim);
@@ -66,7 +66,7 @@ public class GameActivity extends AppCompatActivity {
 
 
         // set Animations
-        repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.view_animations);
+        repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.view_animation_start);
         repertoireAnim.setStartOffset(800);
         repertoireAnim.setDuration(500);
         colorRepertoireView.startAnimation(repertoireAnim);

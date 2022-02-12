@@ -1,16 +1,18 @@
 package fhku.appprojektmastermind.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
@@ -20,8 +22,9 @@ import fhku.appprojektmastermind.R;
 public class MainActivity extends AppCompatActivity {
     ImageView logo;
     Button btn_start, btn_guide;
-    Animation logoAnim, btn1Anim, btn2Anim;
+    Animation logoAnim, btn1Anim, btn2Anim, scaleUp, scaleDown;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,28 +36,56 @@ public class MainActivity extends AppCompatActivity {
         btn_guide = findViewById(R.id.btn_guide);
 
 
+        btn_start.setOnTouchListener((v, event) -> {
+            scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+            scaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down);
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.startAnimation(scaleDown);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.performClick();
+                    v.startAnimation(scaleUp);
+
+                    showCustomDialog();
+                    break;
+            }
+            return false;
+        });
 
 
-        btn_start.setOnClickListener(view -> showCustomDialog());
+        btn_guide.setOnTouchListener((v, event) -> {
+            scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+            scaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down);
 
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.startAnimation(scaleDown);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.performClick();
+                    v.startAnimation(scaleUp);
 
-        btn_guide.setOnClickListener(view ->{
-            Intent intent = new Intent(view.getContext(), GuideActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                    Intent intent = new Intent(v.getContext(), GuideActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                    break;
+            }
+            return false;
         });
 
 
         // set Animations
-        logoAnim = AnimationUtils.loadAnimation(this, R.anim.view_animations);
+        logoAnim = AnimationUtils.loadAnimation(this, R.anim.view_animation_start);
         logoAnim.setStartOffset(200);
         logoAnim.setDuration(1200);
 
-        btn1Anim = AnimationUtils.loadAnimation(this, R.anim.view_animations);
+        btn1Anim = AnimationUtils.loadAnimation(this, R.anim.view_animation_start);
         btn1Anim.setStartOffset(700);
         btn1Anim.setDuration(1000);
 
-        btn2Anim = AnimationUtils.loadAnimation(this, R.anim.view_animations);
+        btn2Anim = AnimationUtils.loadAnimation(this, R.anim.view_animation_start);
         btn2Anim.setStartOffset(900);
         btn2Anim.setDuration(1000);
 
