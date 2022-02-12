@@ -52,7 +52,7 @@ public class GameActivity extends AppCompatActivity {
         ColorRepertoireView colorRepertoireView = findViewById(R.id.colorRepertoire);
         colorRepertoireView.setColorList(game.getColorRepertoire());
 
-        Animation repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.view_animation_start);
+        Animation repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         repertoireAnim.setStartOffset(500);
         repertoireAnim.setDuration(500);
         colorRepertoireView.startAnimation(repertoireAnim);
@@ -66,7 +66,7 @@ public class GameActivity extends AppCompatActivity {
 
 
         // set Animations
-        repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.view_animation_start);
+        repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         repertoireAnim.setStartOffset(800);
         repertoireAnim.setDuration(500);
         colorRepertoireView.startAnimation(repertoireAnim);
@@ -88,6 +88,7 @@ public class GameActivity extends AppCompatActivity {
         }
         dialog.setContentView(contentView);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
         dialog.findViewById(buttonView).setOnTouchListener((v, event) -> {
             scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);

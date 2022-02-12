@@ -77,15 +77,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         // set Animations
-        logoAnim = AnimationUtils.loadAnimation(this, R.anim.view_animation_start);
+        logoAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         logoAnim.setStartOffset(200);
         logoAnim.setDuration(1200);
 
-        btn1Anim = AnimationUtils.loadAnimation(this, R.anim.view_animation_start);
+        btn1Anim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         btn1Anim.setStartOffset(700);
         btn1Anim.setDuration(1000);
 
-        btn2Anim = AnimationUtils.loadAnimation(this, R.anim.view_animation_start);
+        btn2Anim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         btn2Anim.setStartOffset(900);
         btn2Anim.setDuration(1000);
 
@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_difficulty);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
         Button btn_kids = dialog.findViewById(R.id.btn_difficulty_kids);
         Button btn_easy = dialog.findViewById(R.id.btn_difficulty_easy);
