@@ -10,7 +10,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import fhku.appprojektmastermind.container.GuessRoundAdapter;
@@ -21,8 +24,8 @@ import fhku.appprojektmastermind.container.TargetListView;
 
 public class GameActivity extends AppCompatActivity {
 
-    private MastermindGame game;
     private TargetListView targetListView;
+    private Animation scaleUp, scaleDown, targetListAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,7 @@ public class GameActivity extends AppCompatActivity {
 
         // set the difficulty according to an Intent from the MainActivity
         MastermindGame.Difficulty difficulty = (MastermindGame.Difficulty) getIntent().getSerializableExtra("difficulty");
-        game = new MastermindGame(difficulty, this);
+        MastermindGame game = new MastermindGame(difficulty, this);
 
         // set up a GuessRoundAdapter for the RecyclerView
         GuessRoundAdapter adapter = new GuessRoundAdapter(game);
@@ -49,10 +52,24 @@ public class GameActivity extends AppCompatActivity {
         ColorRepertoireView colorRepertoireView = findViewById(R.id.colorRepertoire);
         colorRepertoireView.setColorList(game.getColorRepertoire());
 
+        Animation repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        repertoireAnim.setStartOffset(500);
+        repertoireAnim.setDuration(500);
+        colorRepertoireView.startAnimation(repertoireAnim);
+
+
+
         // assign the game's TargetList
         targetListView = findViewById(R.id.targetList);
         targetListView.setVisibility(View.GONE);
         targetListView.setColorList(game.getTargetList());
+
+
+        // set Animations
+        repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        repertoireAnim.setStartOffset(800);
+        repertoireAnim.setDuration(500);
+        colorRepertoireView.startAnimation(repertoireAnim);
     }
 
     public void openEndOfGameDialog(boolean hasWon) {
@@ -71,8 +88,26 @@ public class GameActivity extends AppCompatActivity {
         }
         dialog.setContentView(contentView);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
-        dialog.findViewById(buttonView).setOnClickListener(view -> backToMenu());
+        dialog.findViewById(buttonView).setOnTouchListener((v, event) -> {
+            scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
+            scaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down);
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.startAnimation(scaleDown);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.performClick();
+                    v.startAnimation(scaleUp);
+
+                    backToMenu();
+                    break;
+            }
+            return false;
+        });
+
         dialog.<ImageView>findViewById(closeView).setOnClickListener(view -> dialog.dismiss());
 
         dialog.show();
@@ -100,9 +135,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void setTargetListVisibility(boolean visible) {
-        this.targetListView.setVisibility(
-                (visible ? View.VISIBLE : View.GONE)
-        );
+        if (visible) {
+               this.targetListView.setVisibility(View.VISIBLE);
+               targetListAnim = AnimationUtils.loadAnimation(this, R.anim.targelist_visible);
+               this.targetListView.startAnimation(targetListAnim);
+        } else {
+               this.targetListView.setVisibility(View.GONE);
+        }
     }
 }
 
