@@ -25,7 +25,7 @@ import fhku.appprojektmastermind.container.TargetListView;
 public class GameActivity extends AppCompatActivity {
 
     private TargetListView targetListView;
-    private Animation scaleUp, scaleDown;
+    private Animation scaleUp, scaleDown, targetListAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,9 +135,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void setTargetListVisibility(boolean visible) {
-        this.targetListView.setVisibility(
-                (visible ? View.VISIBLE : View.GONE)
-        );
+        if (visible) {
+               this.targetListView.setVisibility(View.VISIBLE);
+               targetListAnim = AnimationUtils.loadAnimation(this, R.anim.targelist_visible);
+               this.targetListView.startAnimation(targetListAnim);
+        } else {
+               this.targetListView.setVisibility(View.GONE);
+        }
     }
 }
 
