@@ -1,31 +1,29 @@
 package fhku.appprojektmastermind.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import fhku.appprojektmastermind.container.GuessRoundAdapter;
-import fhku.appprojektmastermind.container.ColorRepertoireView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import fhku.appprojektmastermind.ButtonTouchListener;
 import fhku.appprojektmastermind.MastermindGame;
 import fhku.appprojektmastermind.R;
+import fhku.appprojektmastermind.container.ColorRepertoireView;
+import fhku.appprojektmastermind.container.GuessRoundAdapter;
 import fhku.appprojektmastermind.container.TargetListView;
 
 public class GameActivity extends AppCompatActivity {
-
     private TargetListView targetListView;
-    private Animation scaleUp, scaleDown, targetListAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +55,10 @@ public class GameActivity extends AppCompatActivity {
         repertoireAnim.setDuration(500);
         colorRepertoireView.startAnimation(repertoireAnim);
 
-
-
         // assign the game's TargetList
         targetListView = findViewById(R.id.targetList);
         targetListView.setVisibility(View.GONE);
         targetListView.setColorList(game.getTargetList());
-
 
         // set Animations
         repertoireAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
@@ -90,23 +85,9 @@ public class GameActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
-        dialog.findViewById(buttonView).setOnTouchListener((v, event) -> {
-            scaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
-            scaleDown = AnimationUtils.loadAnimation(this, R.anim.scale_down);
-
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    v.startAnimation(scaleDown);
-                    break;
-                case MotionEvent.ACTION_UP:
-                    v.performClick();
-                    v.startAnimation(scaleUp);
-
-                    backToMenu();
-                    break;
-            }
-            return false;
-        });
+        View buttonBackToMenu = dialog.findViewById(buttonView);
+        buttonBackToMenu.setOnTouchListener(new ButtonTouchListener());
+        buttonBackToMenu.setOnClickListener(view -> backToMenu());
 
         dialog.<ImageView>findViewById(closeView).setOnClickListener(view -> dialog.dismiss());
 
@@ -136,11 +117,11 @@ public class GameActivity extends AppCompatActivity {
 
     public void setTargetListVisibility(boolean visible) {
         if (visible) {
-               this.targetListView.setVisibility(View.VISIBLE);
-               targetListAnim = AnimationUtils.loadAnimation(this, R.anim.targelist_visible);
-               this.targetListView.startAnimation(targetListAnim);
+            this.targetListView.setVisibility(View.VISIBLE);
+            Animation targetListAnim = AnimationUtils.loadAnimation(this, R.anim.targelist_visible);
+            this.targetListView.startAnimation(targetListAnim);
         } else {
-               this.targetListView.setVisibility(View.GONE);
+            this.targetListView.setVisibility(View.GONE);
         }
     }
 }
