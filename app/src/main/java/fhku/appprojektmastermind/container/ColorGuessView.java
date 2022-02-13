@@ -63,8 +63,7 @@ public class ColorGuessView extends ColorListView {
 //                    owner.removeView(draggedView);
 
                     ColorBallView receiver = (ColorBallView) dragReceiverView;
-                    receiver.getColorBall().setColor(draggedView.getColorBall().getColorInt());
-                    receiver.setColorBall(draggedView.getColorBall());
+                    receiver.fillWithColor(draggedView.getColorBall().getColorInt());
                     break;
             }
             return true;
