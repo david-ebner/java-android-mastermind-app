@@ -18,6 +18,10 @@ public class ColorBallView extends View {
         this.colorBall = colorBall;
         invalidate();
     }
+    public void fillWithColor(int colorInt) {
+        this.colorBall.setColor(colorInt);
+        invalidate();
+    }
 
     public ColorBall getColorBall() {
         return colorBall;
