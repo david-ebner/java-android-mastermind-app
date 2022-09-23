@@ -1,23 +1,17 @@
-# APP Projekt Mastermind
-_spätester Abgabetermin: 13. Februar 2022_
+# Mastermind
 
-## Workflow
-- Issues (mit einer User Story) jederzeit von jedermann in "Open" erstellen
-- Karte erfüllt DoR: gemeinsam bewegen ins Product Backlog
-- Sprint Backlog bekommt aktuell umzusetzende Issues aus dem Product Backlog
-- Aus dem Sprint Backlog können Issues zur Bearbeitung entnommen werden
-- umgesetze Issue wird in "to review" verschoben, und der Merge Request wird an den jeweils anderen assigned (dieser führt den Merge durch und verschiebt die Issue in "closed")
+This project was created by [David Ebner](https://github.com/alldavelong) and [Tobias Maier](https://github.com/maiertbi) during the third semester at the university of applied sciences Kufstein, Austria.
 
-## Best Practices
-### DoR - Defnition of Ready
->Voraussetzung, um Issue ins Product Backlog zu bewegen
-- Klarheit: jedem ist klar, was das Ticket bedeutet
-- Testbarkeit: 3-5 Akzeptanzkriterien pro User Story wurden erstellt
-- Umsetzbarkeit: User Story ist klein genug und nicht zu komplex, sodass sie innerhalb eines Sprints erledigt werden kann
+The original Mastermind (or Master Mind) was a board game for two players where one of them tries to decipher the code the other one has come up with. For more information about the game visit [Wikipedia](https://en.wikipedia.org/wiki/Mastermind_(board_game)).
 
-### DoD - Definition of Done
->Voraussetzung, um Issue zu schliesen ("closed")
-- Akzeptanzkriterien sind erfüllt
-- entstandener Code ist ausdokumentiert
-- im main-Branch hinzugefügt
+The app "Mastermind" is an interpretation of this famous board game with the catch that no second player is needed. The program itself determines the pattern to be cracked and the player has to guess is with the received feedback from his previous guesses.
 
+## the app itself
+
+This app has a minimalistic design and everything is fully animated - every button press, every pop-up as well as every Drag'n'Drop.
+
+At the beginning you can choose between the game itself or the ruleset. When choosing the first option you'll get to choose between different difficulties. Then you can start the game by dragging the color balls to the field you think is correct. After you finish your round you only have to press "OK" to let the program check your input.
+
+If you guessed it correctly you will get the winningScreen or the game is over if there are no turns left.
+
+![MainScreen](pictures_readMe/MainScreen.png) ![Difficulties](pictures_readMe/Difficulties.png) ![PlayScreen](pictures_readMe/PlayScreen.png) ![winningScreen](pictures_readMe/WinningScreen.png) ![LosingScreen](pictures_readMe/LosingScreen.png)
