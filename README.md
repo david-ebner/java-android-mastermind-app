@@ -10,11 +10,8 @@ The app "Mastermind" is an interpretation of this famous board game with the cat
 
 This app has a minimalistic design and everything is fully animated - every button press, every pop-up as well as every Drag'n'Drop.
 
-![MainScreen](pictures_readMe/MainScreen.png) ![Difficulties](pictures_readMe/Difficulties.png) ![PlayScreen](pictures_readMe/PlayScreen.png)
-
 At the beginning you can choose between the game itself or the ruleset. When choosing the first option you'll get to choose between different difficulties. Then you can start the game by dragging the color balls to the field you think is correct. After you finish your round you only have to press "OK" to let the program check your input.
-
 
 If you guessed it correctly you will get the winningScreen or the game is over if there are no turns left.
 
-![winningScreen](pictures_readMe/WinningScreen.png) ![LosingScreen](pictures_readMe/LosingScreen.png)
+![MainScreen](pictures_readMe/MainScreen.png) ![Difficulties](pictures_readMe/Difficulties.png) ![PlayScreen](pictures_readMe/PlayScreen.png) ![winningScreen](pictures_readMe/WinningScreen.png) ![LosingScreen](pictures_readMe/LosingScreen.png)
